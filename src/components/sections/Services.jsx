@@ -23,13 +23,24 @@ const services = [
   }
 ];
 
+const tickerItems = [
+  "Brand Naming",
+  "Identité Visuelle",
+  "Direction Artistique",
+  "Site E-commerce",
+  "Brand Naming",
+  "Identité Visuelle",
+  "Direction Artistique",
+  "Site E-commerce",
+];
+
 const Services = () => {
   return (
     <section className="services-section">
       <style>{`
         .services-section {
           background-color: var(--brand-primary);
-          padding: 120px 8%;
+          padding: 120px 8% 0;
           color: var(--text-main);
         }
 
@@ -135,56 +146,152 @@ const Services = () => {
           flex-grow: 1;
           display: flex;
           align-items: center;
-          padding: 20px 40px; /* Extra padding for bullets */
+          padding: 20px 30px;
         }
 
         .service-list {
-          list-style: none; /* Custom bullets for better control */
+          list-style: none;
           padding: 0;
           margin: 0;
           width: 100%;
         }
 
         .service-item {
-          font-size: 0.85rem;
-          font-weight: 700;
-          line-height: 2;
+          font-size: 0.9rem;
+          font-weight: 400;
           color: var(--text-main);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
+          text-transform: none;
+          letter-spacing: 0.01em;
           position: relative;
-          padding-left: 20px;
-          margin-bottom: 8px;
+          padding-left: 18px;
+          margin-bottom: 18px;
+          line-height: 1.5;
         }
 
-        /* The bullet point */
+        .service-item:last-child {
+          margin-bottom: 0;
+        }
+
         .service-item::before {
           content: "•";
           color: var(--brand-orange);
           position: absolute;
           left: 0;
           font-weight: 900;
-          font-size: 1.2rem;
+          font-size: 1rem;
+          line-height: 1.5;
         }
 
-        .services-footer {
-          margin-top: 100px;
-          text-align: center;
+        .services-cta {
+          margin-top: 90px;
+          padding: 60px 0;
+          border-top: 1px solid rgba(136, 179, 198, 0.15);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 40px;
+          flex-wrap: wrap;
         }
 
-        .footer-tagline {
-          font-size: 1.2rem;
-          font-weight: 900;
-          color: var(--brand-pale);
-          margin-bottom: 0.8rem;
-          text-transform: uppercase;
-        }
-
-        .footer-main-text {
-          font-size: clamp(1.4rem, 3vw, 2.2rem);
-          font-weight: 900;
-          text-transform: uppercase;
+        .services-cta-text {
+          font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+          font-weight: 700;
           color: var(--text-main);
+          line-height: 1.3;
+          margin: 0;
+          max-width: 540px;
+        }
+
+        .services-cta-text em {
+          font-style: normal;
+          color: var(--brand-pale);
+        }
+
+        .services-cta-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          background-color: var(--brand-orange);
+          color: #fff;
+          text-decoration: none;
+          font-size: 0.8rem;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          padding: 16px 32px;
+          border-radius: 4px;
+          white-space: nowrap;
+          transition: all 0.25s ease;
+          flex-shrink: 0;
+        }
+
+        .services-cta-link:hover {
+          background-color: #fff;
+          color: var(--brand-orange);
+          transform: translateY(-2px);
+        }
+
+        .services-cta-arrow {
+          font-size: 1rem;
+          transition: transform 0.2s ease;
+        }
+
+        .services-cta-link:hover .services-cta-arrow {
+          transform: translateX(4px);
+        }
+
+        .services-ticker {
+          width: 100vw;
+          margin-left: calc(-8%);
+          overflow: hidden;
+          border-top: 1px solid rgba(136, 179, 198, 0.15);
+          border-bottom: 1px solid rgba(136, 179, 198, 0.15);
+          padding: 20px 0;
+          position: relative;
+        }
+
+        .ticker-track {
+          display: flex;
+          gap: 0;
+          width: max-content;
+          animation: tickerScroll 18s linear infinite;
+        }
+
+        .ticker-track:hover {
+          animation-play-state: paused;
+        }
+
+        .ticker-item {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          white-space: nowrap;
+        }
+
+        .ticker-label {
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.45);
+          padding: 0 40px;
+          transition: color 0.3s ease;
+        }
+
+        .ticker-label:hover {
+          color: var(--brand-orange);
+        }
+
+        .ticker-sep {
+          color: var(--brand-orange);
+          font-size: 1rem;
+          opacity: 0.5;
+          flex-shrink: 0;
+        }
+
+        @keyframes tickerScroll {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
         }
 
         @media (max-width: 1100px) {
@@ -193,9 +300,20 @@ const Services = () => {
           }
         }
 
+        @media (max-width: 768px) {
+          .services-cta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 28px;
+          }
+        }
+
         @media (max-width: 600px) {
           .services-grid {
             grid-template-columns: 1fr;
+          }
+          .services-ticker {
+            margin-left: calc(-6%);
           }
         }
       `}</style>
@@ -218,9 +336,7 @@ const Services = () => {
               <div className="content-area">
                 <ul className="service-list">
                   {service.details.map((detail, idx) => (
-                    <li key={idx} className="service-item">
-                      {detail}
-                    </li>
+                    <li key={idx} className="service-item">{detail}</li>
                   ))}
                 </ul>
               </div>
@@ -229,6 +345,29 @@ const Services = () => {
         ))}
       </div>
 
+      {/* CTA block */}
+      <div className="services-cta">
+        <p className="services-cta-text">
+          Un besoin précis ?{' '}
+          <em>On commence par en parler.</em>
+        </p>
+        <a href="#contact" className="services-cta-link">
+          Démarrer un projet
+          <span className="services-cta-arrow">→</span>
+        </a>
+      </div>
+
+      {/* Scrolling ticker */}
+      <div className="services-ticker">
+        <div className="ticker-track">
+          {[...tickerItems, ...tickerItems].map((item, i) => (
+            <span key={i} className="ticker-item">
+              <span className="ticker-label">{item}</span>
+              <span className="ticker-sep">—</span>
+            </span>
+          ))}
+        </div>
+      </div>
 
     </section>
   );

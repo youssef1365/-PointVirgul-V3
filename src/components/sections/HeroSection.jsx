@@ -1,26 +1,28 @@
 import { useEffect, useRef } from 'react';
 
-const slide = {
-  title: "<strong>Nous construisons des marques qui avancent.</strong>",
-  subtitle: "Stratégie, branding et expériences digitales pour faire grandir votre business.",
-  cta1: "Démarrer un Projet",
-  cta2: "Découvrez notre approche"
-};
-
 export default function HeroSection() {
   const slideRef = useRef(null);
 
   useEffect(() => {
     const slideEl = slideRef.current;
-    slideEl.classList.add('is-visible');
+    if (slideEl) slideEl.classList.add('is-visible');
   }, []);
 
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;700&display=swap');
+
+        :root {
+          --brand-primary: #0e1a1d;
+          --brand-accent: #e8622a;
+          --brand-light: #ffffff;
+          --brand-pale: rgba(255,255,255,0.55);
+        }
+
         .hero-section {
           width: 100vw;
-          height: 100vh;
+          min-height: 100vh;
           background: var(--brand-primary);
           position: relative;
           display: flex;
@@ -34,212 +36,233 @@ export default function HeroSection() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(at 0% 0%, var(--brand-accent) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, #c0dfe2 0px, transparent 50%),
-            radial-gradient(at 50% 100%, #2a3f44 0px, transparent 50%);
-          filter: blur(80px);
-          opacity: 0.3;
+            radial-gradient(ellipse at 0% 0%, rgba(232,98,42,0.12) 0px, transparent 55%),
+            radial-gradient(ellipse at 100% 100%, rgba(30,60,70,0.4) 0px, transparent 55%),
+            radial-gradient(ellipse at 60% 40%, rgba(20,45,55,0.3) 0px, transparent 50%);
           z-index: 1;
+        }
+
+        .bg-text {
+          position: absolute;
+          right: 2vw;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 1;
+          pointer-events: none;
+          user-select: none;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          line-height: 0.85;
+          opacity: 0;
+          animation: fadeInBg 1.4s ease 0.3s forwards;
+        }
+
+        .bg-text span {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(16vw, 22vw, 26vw);
+          color: #ffffff;
+          opacity: 0.04;
+          letter-spacing: -0.02em;
+          display: block;
+          filter: blur(1px);
+        }
+
+        @keyframes fadeInBg {
+          to { opacity: 1; }
+        }
+
+        .accent-bar {
+          position: absolute;
+          left: 5%;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1px;
+          height: 0;
+          background: linear-gradient(to bottom, transparent, rgba(232,98,42,0.6), transparent);
+          z-index: 2;
+          animation: growBar 1.2s ease 0.2s forwards;
+        }
+
+        @keyframes growBar {
+          to { height: 35vh; }
         }
 
         .slide {
           width: 100%;
-          height: 100vh;
+          min-height: 100vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
           padding: 0 8%;
+          padding-top: 80px; /* offset for fixed header */
           position: relative;
           z-index: 2;
         }
 
         .hero-content {
-          width: 100%;
-          max-width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 2rem;
+          max-width: 700px;
         }
 
         .hero-title {
-          font-size: clamp(1.8rem, 4vw, 3.5rem);
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(2.8rem, 8vw, 8rem);
           font-weight: 400;
-          line-height: 1.15;
+          line-height: 0.95;
           color: #fff;
-          text-transform: uppercase;
+          letter-spacing: -0.01em;
           margin: 0;
-          width: 100%;
-          max-width: 90%;
           opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s ease 0.2s;
+          transform: translateY(30px);
+          animation: slideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
 
-        .hero-title strong {
-          font-weight: 900;
-          color: var(--brand-light);
-        }
-
-        .hero-title em {
-          font-style: italic;
-          font-weight: 400;
+        .hero-title .accent-line {
           color: var(--brand-accent);
-        }
-
-        .hero-subtitle {
-          color: var(--brand-pale);
-          font-size: clamp(0.9rem, 1.8vw, 1rem);
-          max-width: 700px;
-          line-height: 1.5;
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s ease 0.5s;
-          margin: 0;
-          align-self: flex-start;
-          margin-left: auto;
-          margin-right: 0;
         }
 
         .hero-actions {
           display: flex;
-          gap: 1.2rem;
+          flex-wrap: wrap;
+          gap: 1rem;
           opacity: 0;
-          transition: all 0.8s ease 0.7s;
-          margin-top: 0.5rem;
-        }
-
-        .slide.is-visible .hero-title {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .slide.is-visible .hero-subtitle {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .slide.is-visible .hero-actions {
-          opacity: 1;
+          transform: translateY(16px);
+          animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
         }
 
         .btn-primary,
         .btn-secondary {
           text-decoration: none;
+          font-family: 'DM Sans', sans-serif;
           font-weight: 700;
-          font-size: 0.75rem;
-          padding: 1rem 2rem;
-          transition: all 0.3s ease;
+          font-size: 0.7rem;
+          padding: 1.1rem 2.2rem;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.1em;
           white-space: nowrap;
           border-radius: 0;
+          display: inline-block;
+          transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.25s ease;
         }
 
         .btn-primary {
           background: var(--brand-accent);
-          color: var(--brand-primary);
+          color: #fff;
+          border: 1px solid var(--brand-accent);
         }
 
         .btn-primary:hover {
           background: #fff;
           color: var(--brand-primary);
+          border-color: #fff;
+          transform: translateY(-1px);
         }
 
         .btn-secondary {
-          color: var(--brand-pale);
-          border: 1px solid var(--brand-pale);
           background: transparent;
+          color: var(--brand-pale);
+          border: 1px solid rgba(255,255,255,0.25);
         }
 
         .btn-secondary:hover {
-          background: var(--brand-pale);
-          color: var(--brand-primary);
+          background: rgba(255,255,255,0.07);
+          color: #fff;
+          border-color: rgba(255,255,255,0.5);
+          transform: translateY(-1px);
         }
 
-        @media (max-width: 1024px) {
-          .hero-title {
-            font-size: clamp(1.6rem, 4vw, 3rem);
-            line-height: 1.2;
-            max-width: 100%;
-          }
+        .credibility-line {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.65rem;
+          font-weight: 300;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.3);
+          opacity: 0;
+          animation: fadeInCred 1s ease 1.2s forwards;
+        }
 
-          .hero-subtitle {
-            font-size: 0.95rem;
-            max-width: 600px;
-          }
+        @keyframes slideUp {
+          to { opacity: 1; transform: translateY(0); }
+        }
 
-          .hero-content {
-            gap: 1.2rem;
-          }
+        @keyframes fadeInCred {
+          to { opacity: 1; }
         }
 
         @media (max-width: 768px) {
           .slide {
             padding: 0 6%;
-            padding-top: 20vh;
+            padding-top: 80px;
           }
-
-          .hero-content {
-            gap: 1rem;
-          }
-
           .hero-title {
-            font-size: clamp(1.4rem, 5.5vw, 2rem);
-            line-height: 1.25;
-            max-width: 100%;
+            font-size: clamp(2.4rem, 10vw, 3.8rem);
+            line-height: 0.92;
           }
-
-          .hero-subtitle {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            max-width: 100%;
+          .bg-text span {
+            font-size: 35vw;
           }
-
           .hero-actions {
             flex-direction: column;
             width: 100%;
-            gap: 0.8rem;
-            margin-top: 0.3rem;
           }
-
           .btn-primary,
           .btn-secondary {
             text-align: center;
-            width: 100%;
             font-size: 0.65rem;
-            padding: 0.85rem 1.5rem;
+            padding: 1rem 1.8rem;
+            width: 100%;
+          }
+          .accent-bar {
+            display: none;
           }
         }
 
         @media (max-width: 480px) {
-          .slide {
-            padding-top: 18vh;
-          }
-
           .hero-title {
-            font-size: 1.3rem;
+            font-size: 2.2rem;
           }
-
-          .hero-subtitle {
-            font-size: 0.8rem;
+          .slide {
+            padding-top: 80px;
           }
         }
       `}</style>
 
       <section className="hero-section" id="heroSection">
         <div className="mesh-gradient" />
+
+        {/* Background decorative typography */}
+        <div className="bg-text" aria-hidden="true">
+          <span>POINT</span>
+          <span>VIRGUL</span>
+        </div>
+
+        {/* Thin accent bar */}
+        <div className="accent-bar" />
+
         <div className="slide" ref={slideRef}>
           <div className="hero-content">
-            <h1
-              className="hero-title"
-              dangerouslySetInnerHTML={{ __html: slide.title }}
-            />
-            <p className="hero-subtitle">{slide.subtitle}</p>
+
+            <h1 className="hero-title">
+              LES MARQUES<br />
+              <span className="accent-line">FORTES</span><br />
+              NE NAISSENT<br />
+              PAS PAR HASARD.
+            </h1>
+
             <div className="hero-actions">
-              <a href="#contact" className="btn-primary">{slide.cta1} →</a>
-              <a href="#methodology" className="btn-secondary">{slide.cta2}</a>
+              <a href="#contact" className="btn-primary">Démarrer un Projet &nbsp;→</a>
+              <a href="#methodology" className="btn-secondary">Découvrir Notre Approche</a>
             </div>
+
+            <p className="credibility-line">
+              Branding &nbsp;•&nbsp; Digital &nbsp;•&nbsp; Stratégie &nbsp;•&nbsp; Expériences Web
+            </p>
+
           </div>
         </div>
       </section>

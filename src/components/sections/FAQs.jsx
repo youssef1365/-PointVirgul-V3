@@ -3,19 +3,27 @@ import React, { useState } from 'react';
 const faqs = [
   {
     question: "QUELLE EST LA DIFFÉRENCE ENTRE BRANDING ET IDENTITÉ VISUELLE ?",
-    answer: "Le branding, c’est le fond. L’identité visuelle, c’est la forme. Chez Point Virgule, on commence toujours par le sens avant le style."
+    answer: "Le branding, c'est le fond. L'identité visuelle, c'est la forme. Chez Point Virgule, on commence toujours par le sens avant le style."
   },
   {
-    question: "AI-JE BESOIN D’UN BRANDING SI J’AI DÉJÀ UN LOGO ?",
+    question: "AI-JE BESOIN D'UN BRANDING SI J'AI DÉJÀ UN LOGO ?",
     answer: "Souvent, oui. Un logo peut exister seul. Une marque, jamais. On vous aide à transformer un symbole en système."
   },
   {
+    question: "COMBIEN DE TEMPS DURE UN PROJET ?",
+    answer: "La plupart de nos projets vont du brief à la première livraison en moins de 3 semaines. On ne prend pas 6 mois pour livrer un logo."
+  },
+  {
+    question: "COMMENT SE PASSE LA PREMIÈRE PRISE DE CONTACT ?",
+    answer: "Vous remplissez le formulaire ci-dessous. On lit votre projet avant de vous appeler — pas de call à froid, pas de pitch générique. On arrive préparés."
+  },
+  {
     question: "À QUOI SERT UNE STRATÉGIE DE MARQUE ?",
-    answer: "À savoir quoi dire, comment le dire, et surtout pourquoi le dire. C’est la boussole avant le voyage."
+    answer: "À savoir quoi dire, comment le dire, et surtout pourquoi le dire. C'est la boussole avant le voyage."
   },
   {
     question: "QUELLE EST LA DIFFÉRENCE ENTRE WEB DESIGN ET UX/UI ?",
-    answer: "Le web design séduit l’œil. L’UX/UI facilite le parcours. Nous concevons des sites qui font les deux."
+    answer: "Le web design séduit l'œil. L'UX/UI facilite le parcours. Nous concevons des sites qui font les deux."
   },
   {
     question: "PROPOSEZ-VOUS LA CRÉATION DE SITES WEB ?",
@@ -62,12 +70,19 @@ const FAQ = () => {
         }
 
         .faq-title {
-          font-size: clamp(2.5rem, 6vw, 4rem);
+          font-size: clamp(2rem, 5vw, 3.2rem);
           font-weight: 900;
           margin-bottom: 80px;
           color: #fff;
           letter-spacing: -0.02em;
-          text-transform: uppercase;
+          line-height: 1.15;
+          max-width: 700px;
+        }
+
+        .faq-title em {
+          font-style: italic;
+          font-weight: 400;
+          color: var(--brand-pale, rgba(255,255,255,0.5));
         }
 
         .faq-list {
@@ -82,7 +97,6 @@ const FAQ = () => {
 
         .faq-item:hover {
           border-bottom-color: rgba(255, 255, 255, 0.25);
-
         }
 
         summary {
@@ -156,12 +170,11 @@ const FAQ = () => {
 
         details[open] summary {
           color: var(--brand-orange);
-
         }
 
         .faq-content {
           padding: 0 0 40px 0;
-          padding-left: calc(0px + 48px); /* Aligns text under the question */
+          padding-left: calc(0px + 48px);
           color: rgba(255, 255, 255, 0.7);
           line-height: 1.75;
           font-size: clamp(1rem, 1.8vw, 1.15rem);
@@ -201,11 +214,14 @@ const FAQ = () => {
         @media (max-width: 768px) {
           summary { padding: 28px 0; gap: 16px; }
           .faq-content { padding-left: 0; }
+          .faq-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
         }
       `}</style>
 
       <div className="faq-container">
-        <h2 className="faq-title">Questions Fréquentes</h2>
+        <h2 className="faq-title">
+          Vous vous posez<br /><em>sûrement ces questions.</em>
+        </h2>
         <div className="faq-list">
           {visibleFaqs.map((faq, index) => (
             <details className="faq-item" key={index}>

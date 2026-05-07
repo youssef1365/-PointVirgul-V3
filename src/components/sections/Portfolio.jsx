@@ -4,105 +4,107 @@ const projects = [
   {
     id: "01",
     name: "RIAD ZYO",
-    desc: "HOTEL BOUTIQUE ART",
-    details: "Repositionner un riad en une expérience premium, en constante évolution, pensée pour créer de l'impact et convertir en ligne.",
+    desc: "HOTEL BOUTIQUE ART - Rabat",
+    details: "Repositionner un riad en une expérience premium,  et convertir en direct booking.",
     tags: "Branding — Site web (réservation) — Photo / Vidéo",
-    category: "HOSPITALITY / TOURISME"
+    category: "+67% de réservations directes en 90 jours"
   },
   {
     id: "02",
     name: "JNAN ZAGORA",
-    desc: "FOOD / PRODUITS DU TERROIR",
-    details: "Construire une marque du terroir forte et déployée sur tous ses canaux digitaux.",
-    tags: "Branding — Packaging — E-commerce — Social Media — Ads — Contenu",
-    category: "FOOD / PRODUITS DU TERROIR"
+    desc: "Artisanat & Produits Naturels",
+    details: "Construire une marque premium à partir d'un savoir-faire local, de l'identité jusqu'au digital.",
+    tags: "Branding — Packaging — E-commerce — Direction Artistique",
+    category: "0 à 2 100 abonnés Instagram en 4 mois"
   },
   {
     id: "03",
     name: "CLINIQUE IBN KHALDOUN",
-    desc: "SANTÉ",
-    details: "Moderniser la présence digitale d’un établissement de santé reconnu.",
-    tags: "Site web vitrine — UX/UI",
-    category: "SANTÉ"
+    desc: "Santé — Secteur Médical",
+    details: "Donner à une clinique établie une présence digitale à la hauteur de son niveau de soin.",
+    tags: "Site web — UX/UI — SEO — Optimisation Google Business",
+    category: "+89% de vues Google Business en 60 jours"
   },
   {
     id: "04",
     name: "WINK",
-    desc: "TECH / B2B",
-    details: "Accompagner la transformation digitale et Structurer une plateforme de networking B2B et ses données en pleine expansion.",
-    tags: "Branding — Web — Développement sur-mesure — UX — Social Media — Automatisation",
-    category: "TECH / B2B"
+    desc: "Plateforme B2B — Business Matchmaking",
+    details: "Restructurer un écosystème digital fragmenté en système de croissance scalable.",
+    tags: "Identité Visuelle — Site web — Landing Pages — Architecture Data",
+    category: "+54% de conversion sur les landing pages"
   },
   {
     id: "05",
     name: "MAISON KAÏNA",
-    desc: "LIFESTYLE / RETAIL",
-    details: "Créer une marque élégante où le storytelling structure l’identité et l’expérience, au service d’un univers cohérent et désirable.",
-    tags: "Branding — E-commerce",
-    category: "LIFESTYLE / RETAIL"
+    desc: "Lifestyle & E-commerce",
+    details: "De l'idée au naming, de l'identité à la boutique en ligne — une marque construite de zéro.",
+    tags: "Brand Naming — Identité Visuelle — Direction Artistique — Site E-commerce",
+    category: "Premières ventes en ligne dans les 72h suivant le lancement"
   },
   {
     id: "06",
     name: "TAQÈS",
-    desc: "IMMOBILIER",
-    details: "Structurer une marque immobilière ambitieuse en alignant stratégie, image et présence digitale pour soutenir sa croissance.",
-    tags: "Stratégie — Branding — Web — Social Media — Maintenance",
-    category: "IMMOBILIER"
+    desc: " Immobilier — Rabat",
+    details: "Transformer une ambition immobilière forte en architecture de marque claire et activable.",
+    tags: "Positionnement — Rebranding — Digital — Campagnes Résidentielles",
+    category: "Projet en cours — Lancement Q3 2025"
   }
 ];
 
 const Portfolio = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const isAnimating = useRef(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    const handleScroll = () => {
       if (!sectionRef.current) return;
 
       const rect = sectionRef.current.getBoundingClientRect();
-      const isVisible = rect.top <= 10 && rect.bottom >= window.innerHeight - 10;
+      const sectionHeight = rect.height;
+      const viewHeight = window.innerHeight;
 
-      if (!isVisible) return;
+      const scrollDistance = -rect.top;
+      const progress = scrollDistance / (sectionHeight - viewHeight);
+      const clampedProgress = Math.max(0, Math.min(1, progress));
+      const newIndex = Math.round(clampedProgress * (projects.length - 1));
 
-      const isScrollingDown = e.deltaY > 0;
-      const isScrollingUp = e.deltaY < 0;
-
-      if ((activeIndex === 0 && isScrollingUp) || (activeIndex === projects.length - 1 && isScrollingDown)) {
-        return;
-      }
-
-      if (e.cancelable) e.preventDefault();
-      if (isAnimating.current) return;
-
-      if (isScrollingDown && activeIndex < projects.length - 1) {
-        isAnimating.current = true;
-        setActiveIndex(prev => prev + 1);
-        setTimeout(() => { isAnimating.current = false; }, 850);
-      } else if (isScrollingUp && activeIndex > 0) {
-        isAnimating.current = true;
-        setActiveIndex(prev => prev - 1);
-        setTimeout(() => { isAnimating.current = false; }, 850);
+      if (newIndex !== activeIndex) {
+        setActiveIndex(newIndex);
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [activeIndex]);
 
+  const scrollToProject = (index) => {
+    if (!sectionRef.current) return;
+    const sectionTop = sectionRef.current.offsetTop;
+    const totalScrollable = sectionRef.current.offsetHeight - window.innerHeight;
+    const targetScroll = sectionTop + (index * (totalScrollable / (projects.length - 1)));
+
+    window.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+  };
+
   return (
-    <section className="portfolio-section" ref={sectionRef}>
+    <section
+      className="portfolio-section"
+      ref={sectionRef}
+      style={{ height: `${projects.length * 100}vh` }}
+    >
       <style>{`
         .portfolio-section {
           position: relative;
           background: var(--brand-primary);
-          height: 400vh;
         }
 
         .sticky-wrapper {
           position: sticky;
           top: 0;
-          width: 100vw;
+          width: 100%;
           height: 100vh;
           overflow: hidden;
           display: flex;
@@ -118,8 +120,8 @@ const Portfolio = () => {
           align-items: center;
           padding: 0 10%;
           background: var(--brand-primary);
-          will-change: transform;
-          transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+          transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+          will-change: transform, opacity;
         }
 
         .slide-content {
@@ -261,7 +263,8 @@ const Portfolio = () => {
 
       <div className="sticky-wrapper">
         {projects.map((project, index) => {
-          let xTranslate = index > activeIndex ? 100 : 0;
+          const xTranslate = index > activeIndex ? 100 : 0;
+          const opacity = index < activeIndex ? 0 : 1;
 
           return (
             <div
@@ -269,6 +272,7 @@ const Portfolio = () => {
               className="slide-layer"
               style={{
                 transform: `translate3d(${xTranslate}%, 0, 0)`,
+                opacity: opacity,
                 zIndex: index + 10
               }}
             >
@@ -281,6 +285,7 @@ const Portfolio = () => {
                 <h3 className="slide-desc">{project.desc}</h3>
                 <p className="slide-details">{project.details}</p>
                 <p className="slide-tags">{project.tags}</p>
+                <p className="slide-category">{project.category}</p>
                 <div className="slide-id">{project.id}</div>
               </div>
 
@@ -297,7 +302,7 @@ const Portfolio = () => {
             <div
               key={i}
               className={`dot ${i === activeIndex ? 'active' : ''}`}
-              onClick={() => setActiveIndex(i)}
+              onClick={() => scrollToProject(i)}
             />
           ))}
         </div>

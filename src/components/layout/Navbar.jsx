@@ -21,6 +21,24 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+      const handleScroll = () => {
+        // Glass effect logic
+        headerRef.current?.classList.toggle('glass-active', window.scrollY > 50);
+
+        // Progress bar logic
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = winScroll / height;
+
+        // Update the CSS variable for performance
+        headerRef.current?.style.setProperty('--scroll-progress', scrolled);
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+  useEffect(() => {
     // Prevent body scroll when menu is open on mobile
     document.body.style.overflow = menuOpen ? 'hidden' : 'unset';
   }, [menuOpen]);
@@ -70,6 +88,25 @@ export default function Navbar() {
           margin: 0;
           padding: 0;
         }
+
+                .scroll-progress-bar {
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 2px;
+                  background: linear-gradient(90deg, transparent, #ff4d00, transparent);
+                  transform: scaleX(var(--scroll-progress, 0));
+                  transform-origin: left;
+                  transition: transform 0.1s linear;
+                  pointer-events: none;
+                }
+
+                .main-header.glass-active .scroll-progress-bar {
+                  background: #ff4d00;
+                  height: 1px;
+                  opacity: 0.8;
+                }
 
         .nav-item-group {
           display: flex;
@@ -258,6 +295,7 @@ export default function Navbar() {
             <div className="line" />
           </button>
         </div>
+        <div className="scroll-progress-bar" />
       </header>
 
       <div className={`mobile-menu ${menuOpen ? 'active' : ''}`}>

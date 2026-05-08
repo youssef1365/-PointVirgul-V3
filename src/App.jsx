@@ -15,42 +15,37 @@ const ProjectStatement = () => {
       <style>{`
         .transition-wrapper {
           background-color: var(--brand-primary);
-          padding-bottom: 40px;
-          padding-top : 1px;
+          padding: 120px 0;
+          width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
-          text-align: center;
         }
-
         .statement-text {
           color: #ffffff;
-          font-size: clamp(2.5rem, 5vw, 2.5rem);
+          font-size: clamp(1.8rem, 5vw, 3.5rem);
           font-weight: 800;
           letter-spacing: 0.01em;
           text-transform: uppercase;
           max-width: 1100px;
-          line-height: 1.2;
+          line-height: 1.1;
           margin: 0;
-          padding: 0 40px;
+          padding: 0 6%;
           text-align: center;
         }
-
         .statement-text span {
           color: var(--brand-orange);
           display: block;
-          margin-top: 0.1em;
         }
       `}</style>
-
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
       >
         <p className="statement-text">
-          Chaque projet est différent. &nbsp;
+          Chaque projet est différent.
           <span>Notre exigence reste la même.</span>
         </p>
       </motion.div>
@@ -61,31 +56,19 @@ const ProjectStatement = () => {
 const SectionDivider = () => (
     <div className="divider-container">
       <style>{`
-        .divider-container {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          background-color: var(--brand-primary);
-          padding: 0 5%;
-        }
-
+        .divider-container { width: 100%; background-color: var(--brand-primary); }
         .divider-line {
-          width: 100%;
+          width: 90%;
+          margin: 0 auto;
           height: 1px;
-          background: linear-gradient(
-            90deg,
-            rgba(255,255,255,0) 0%,
-            rgba(255,255,255,0.1) 50%,
-            rgba(255,255,255,0) 100%
-          );
+          background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
         }
       `}</style>
-
       <motion.div
-        initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={{ scaleX: 1, opacity: 1 }}
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1.5, ease: "easeInOut" }}
+        transition={{ duration: 1.5 }}
         className="divider-line"
       />
     </div>
@@ -97,58 +80,27 @@ const BrandTransition = () => {
       <style>{`
         .brand-transition {
           background-color: var(--brand-primary);
-          width: 100%;
-          height: 40vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          padding: 100px 6%;
           text-align: center;
-          margin: 0;
-          padding: 0 5%;
         }
-
-        .transition-container {
-          max-width: 1400px;
-        }
-
         .tagline {
-          font-size: clamp(1rem, 2vw, 1.4rem);
-          font-weight: 800;
+          font-size: clamp(0.85rem, 2vw, 1.1rem);
           color: rgba(255, 255, 255, 0.4);
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
           text-transform: uppercase;
-          letter-spacing: 0.4em;
+          letter-spacing: 0.3em;
         }
-
         .main-text {
-          font-size: clamp(2.5rem, 5vw, 2rem);
+          font-size: clamp(2rem, 5vw, 4rem);
           font-weight: 900;
           text-transform: uppercase;
           color: #ffffff;
-          line-height: 1.1;
-          margin: 0;
-          letter-spacing: -0.02em;
         }
-
-        .highlight-blue {
-          color: var(--brand-pale);
-          display: block; /* Keeps the signature phrase as a focal point on its own line */
-          margin-top: 0.2em;
-        }
+        .highlight-blue { color: var(--brand-pale); display: block; }
       `}</style>
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="transition-container"
-      >
+      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
         <p className="tagline">Peu importe le point de départ.</p>
-        <h2 className="main-text">
-          On fait avancer votre marque,
-          <span className="highlight-blue">virgule après virgule.</span>
-        </h2>
+        <h2 className="main-text">On fait avancer votre marque, <span className="highlight-blue">virgule après virgule.</span></h2>
       </motion.div>
     </section>
   );
@@ -156,41 +108,22 @@ const BrandTransition = () => {
 
 export default function App() {
   return (
-    <div className="app-container">
+    <>
       <Navbar />
-
       <main>
-        <section id="home">
-          <HeroSection />
-        </section>
-
+        <div id="home"><HeroSection /></div>
         <Methodology />
-
         <ProjectStatement />
-
         <SectionDivider />
-
-        <section id="portfolio">
-          <Portfolio />
-        </section>
-
-        <section id="services">
-          <Services />
-        </section>
+        <div id="portfolio"><Portfolio /></div>
+        <div id="services"><Services /></div>
         <SectionDivider />
         <BrandTransition />
         <SectionDivider />
-        <section id="faq">
-          <FAQ />
-        </section>
-
-        <section id="contact">
-          <Contact />
-        </section>
+        <div id="faq"><FAQ /></div>
+        <div id="contact"><Contact /></div>
       </main>
-        <SectionDivider />
-
       <Footer />
-    </div>
+    </>
   );
 }

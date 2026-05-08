@@ -243,6 +243,7 @@ const Services = () => {
         .services-ticker {
           width: 100vw;
           margin-left: calc(-8%);
+          margin-top: 30px;
           overflow: hidden;
           border-top: 1px solid rgba(136, 179, 198, 0.15);
           border-bottom: 1px solid rgba(136, 179, 198, 0.15);
@@ -346,7 +347,7 @@ const Services = () => {
       </div>
 
       {/* CTA block */}
-      <div className="services-cta">
+      {/*}<div className="services-cta">
         <p className="services-cta-text">
           Un besoin précis ?{' '}
           <em>On commence par en parler.</em>
@@ -355,7 +356,7 @@ const Services = () => {
           Démarrer un projet
           <span className="services-cta-arrow">→</span>
         </a>
-      </div>
+      </div>*/}
 
       {/* Scrolling ticker */}
       <div className="services-ticker">

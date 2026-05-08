@@ -204,7 +204,7 @@ export default function App() {
         <div id="virgul">
             <Virgul />
         </div>
-        <SectionDivider />
+
 
         <div id="Contact"><Contact /></div>
 
@@ -220,7 +220,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <SectionDivider />
+
       <Footer />
     </div>
   );

@@ -59,6 +59,7 @@ const projects = [
 
 const Portfolio = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedImg, setSelectedImg] = useState(null); // ADDED: State for lightbox
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -106,13 +107,10 @@ const Portfolio = () => {
 
         .visual-comp {
           flex: 1;
-          display: grid;
-          grid-template-columns: 1fr 1.2fr;
-          grid-template-rows: 1fr 1fr;
-          gap: 1.5rem;
+          display: flex;
+          gap: 20px;
           height: 70vh;
           padding: 2rem;
-          perspective: 1000px;
         }
 
         .image-stack {
@@ -123,7 +121,7 @@ const Portfolio = () => {
         }
 
         .single-image-right {
-          width: 350px;
+          flex: 1;
           height: 100%;
         }
 
@@ -137,20 +135,35 @@ const Portfolio = () => {
           align-items: center;
           justify-content: center;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .frame:nth-child(3) {
-          grid-column: 2;
-          grid-row: 1 / span 2;
+          cursor: zoom-in; /* Indicates clickability */
+          height: 100%;
         }
 
         .frame-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center;
           display: block;
-          transition: transform 0.5s ease;
+        }
+
+        /* Lightbox UI */
+        .lightbox-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.9);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          backdrop-filter: blur(10px);
+          cursor: zoom-out;
+        }
+
+        .lightbox-img {
+          max-width: 90%;
+          max-height: 90vh;
+          object-fit: contain;
+          border-radius: 12px;
         }
 
         .nav-indicators { position: absolute; bottom: 4rem; right: 5%; display: flex; flex-direction: column; gap: 1.2rem; z-index: 100; }
@@ -160,10 +173,17 @@ const Portfolio = () => {
         @media (max-width: 1024px) {
           .slide-layer { flex-direction: column; padding: 40px 8%; overflow-y: auto; }
           .slide-content { flex: none; width: 100%; margin-bottom: 30px; }
-          .visual-comp { flex-direction: column; width: 100%; align-items: center; }
+          .visual-comp { flex-direction: column; width: 100%; align-items: center; height: auto; }
           .image-stack, .single-image-right { width: 100%; }
         }
       `}</style>
+
+      {/* ADDED: Lightbox render */}
+      {selectedImg && (
+        <div className="lightbox-overlay" onClick={() => setSelectedImg(null)}>
+          <img src={selectedImg} alt="Lightbox" className="lightbox-img" />
+        </div>
+      )}
 
       <div className="sticky-wrapper">
         {projects.map((project, index) => (
@@ -190,19 +210,17 @@ const Portfolio = () => {
             </div>
 
             <div className="visual-comp">
-              {/* Original pair stacked vertically */}
               <div className="image-stack">
-                <div className="frame">
+                <div className="frame" onClick={() => setSelectedImg(project.images[0])}>
                   <img src={project.images[0]} alt="" className="frame-image" />
                 </div>
-                <div className="frame">
+                <div className="frame" onClick={() => setSelectedImg(project.images[1])}>
                   <img src={project.images[1]} alt="" className="frame-image" />
                 </div>
               </div>
 
-              {/* New third image on the right side of them */}
               <div className="single-image-right">
-                <div className="frame">
+                <div className="frame" onClick={() => setSelectedImg(project.images[2])}>
                   <img src={project.images[2]} alt="" className="frame-image" />
                 </div>
               </div>

@@ -1,56 +1,42 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-  { name: 'Home', slug: 'home' },
-  { name: 'بورتفوليو', slug: 'portfolio' },
-  { name: 'Services', slug: 'services' },
+  { name: 'Home', slug: '' },
+  { name: 'بورتفوليو', slug: 'Portfolio' },
+  { name: 'Services', slug: 'Services' },
   { name: '.Virgul', slug: 'virgul' },
-  { name: 'Contact', slug: 'contact' },
+  { name: 'Contact', slug: 'Contact' },
 ];
 
 export default function Navbar() {
   const headerRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      headerRef.current?.classList.toggle('glass-active', window.scrollY > 50);
+      const scrolled = window.scrollY;
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrolled / totalHeight;
+
+      headerRef.current?.classList.toggle('glass-active', scrolled > 50);
+      headerRef.current?.style.setProperty('--scroll-progress', progress);
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-      const handleScroll = () => {
-        // Glass effect logic
-        headerRef.current?.classList.toggle('glass-active', window.scrollY > 50);
-
-        // Progress bar logic
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = winScroll / height;
-
-        // Update the CSS variable for performance
-        headerRef.current?.style.setProperty('--scroll-progress', scrolled);
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-  useEffect(() => {
-    // Prevent body scroll when menu is open on mobile
     document.body.style.overflow = menuOpen ? 'hidden' : 'unset';
   }, [menuOpen]);
-
-  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@900&display=swap');
 
-        /* FIXED HEADER WRAPPER */
         .main-header {
           display: grid;
           grid-template-columns: 1fr auto 1fr;
@@ -67,52 +53,38 @@ export default function Navbar() {
 
         .main-header.glass-active {
           padding: 12px 3rem;
-          background: rgba(11, 28, 30, 0.8); /* Fixed background color */
+          background: rgba(11, 28, 30, 0.8);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo { justify-self: start; }
-        .logo img {
-          height: 55px;
-          width: auto;
-          display: block;
-        }
+        .logo img { height: 55px; width: auto; display: block; }
 
         .desktop-nav { justify-self: center; }
-        .desktop-nav ul {
-          display: flex;
-          gap: 2.5rem;
-          list-style: none;
-          margin: 0;
-          padding: 0;
+        .desktop-nav ul { display: flex; gap: 2.5rem; list-style: none; margin: 0; padding: 0; }
+
+        .scroll-progress-bar {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #ff4d00, transparent);
+          transform: scaleX(var(--scroll-progress, 0));
+          transform-origin: left;
+          transition: transform 0.1s linear;
+          pointer-events: none;
         }
 
-                .scroll-progress-bar {
-                  position: absolute;
-                  bottom: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 2px;
-                  background: linear-gradient(90deg, transparent, #ff4d00, transparent);
-                  transform: scaleX(var(--scroll-progress, 0));
-                  transform-origin: left;
-                  transition: transform 0.1s linear;
-                  pointer-events: none;
-                }
-
-                .main-header.glass-active .scroll-progress-bar {
-                  background: #ff4d00;
-                  height: 1px;
-                  opacity: 0.8;
-                }
-
-        .nav-item-group {
-          display: flex;
-          align-items: center;
-          gap: 8px;
+        .main-header.glass-active .scroll-progress-bar {
+          background: #ff4d00;
+          height: 1px;
+          opacity: 0.8;
         }
+
+        .nav-item-group { display: flex; align-items: center; gap: 8px; }
 
         .scroll-link {
           font-weight: 900;
@@ -123,7 +95,6 @@ export default function Navbar() {
           text-decoration: none;
         }
 
-        /* YOUR ORIGINAL PORTFOLIO FLIP */
         .portfolio-flip {
           display: inline-block;
           width: 105px;
@@ -140,9 +111,7 @@ export default function Navbar() {
           transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .nav-item-group:hover .portfolio-flip .lang-wrap {
-          transform: translateY(-50%);
-        }
+        .nav-item-group:hover .portfolio-flip .lang-wrap { transform: translateY(-50%); }
 
         .portfolio-flip .lang {
           display: flex;
@@ -161,12 +130,9 @@ export default function Navbar() {
           font-size: 1.1rem;
         }
 
-        /* ORANGE HOVER COLOR */
         .nav-item-group:hover .scroll-link,
         .nav-item-group:hover .lang,
-        .nav-item-group:hover .deep-link {
-          color: #ff4d00; /* Your brand orange */
-        }
+        .nav-item-group:hover .deep-link { color: #ff4d00; }
 
         .deep-link {
           opacity: 0;
@@ -176,19 +142,15 @@ export default function Navbar() {
           display: flex;
         }
 
-        .nav-item-group:hover .deep-link {
-          opacity: 1;
-          transform: translateX(0);
-        }
+        .nav-item-group:hover .deep-link { opacity: 1; transform: translateX(0); }
 
-        /* MOBILE OVERLAY FIXED */
         .mobile-menu {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100vh;
-          background-color: #0b1c1e; /* Solid background for mobile */
+          background-color: #0b1c1e;
           z-index: 999;
           display: flex;
           flex-direction: column;
@@ -198,15 +160,8 @@ export default function Navbar() {
           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .mobile-menu.active {
-          transform: translateY(0);
-        }
-
-        .mobile-nav {
-          display: flex;
-          flex-direction: column;
-          gap: 2rem;
-        }
+        .mobile-menu.active { transform: translateY(0); }
+        .mobile-nav { display: flex; flex-direction: column; gap: 2rem; }
 
         .mobile-nav-item {
           display: flex;
@@ -214,6 +169,7 @@ export default function Navbar() {
           justify-content: space-between;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding-bottom: 1rem;
+          text-decoration: none;
         }
 
         .mobile-scroll-link {
@@ -221,7 +177,6 @@ export default function Navbar() {
           font-weight: 900;
           text-transform: uppercase;
           color: #fff;
-          text-decoration: none;
         }
 
         .header-right { justify-self: end; }
@@ -237,13 +192,7 @@ export default function Navbar() {
           z-index: 1001;
         }
 
-        .menu-toggle .line {
-          width: 28px;
-          height: 2px;
-          background-color: #fff;
-          transition: 0.3s ease;
-        }
-
+        .menu-toggle .line { width: 28px; height: 2px; background-color: #fff; transition: 0.3s ease; }
         .menu-toggle.active .line:nth-child(1) { transform: translateY(5px) rotate(45deg); }
         .menu-toggle.active .line:nth-child(2) { transform: translateY(-5px) rotate(-45deg); }
 
@@ -257,30 +206,30 @@ export default function Navbar() {
 
       <header className="main-header" ref={headerRef}>
         <div className="logo">
-          <a href="#"><img src="/SHORT.webp" alt="Point Virgul" /></a>
+          <Link to="/"><img src="/SHORT.webp" alt="Point Virgul" /></Link>
         </div>
 
         <nav className="desktop-nav">
           <ul>
             {navItems.map((item) => (
               <li className="nav-item-group" key={item.slug}>
-                {item.slug === 'portfolio' ? (
-                  <a href="#portfolio" className="portfolio-flip">
+                {item.slug === 'Portfolio' ? (
+                  <Link to="/Portfolio" className="portfolio-flip">
                     <span className="lang-wrap">
                       <span className="lang arabic">بورتفوليو</span>
                       <span className="lang">PORTFOLIO</span>
                     </span>
-                  </a>
+                  </Link>
                 ) : (
-                  <a href={`#${item.slug}`} className="scroll-link">
+                  <Link to={`/${item.slug}`} className="scroll-link">
                     {item.name}
-                  </a>
+                  </Link>
                 )}
-                <a href={`#${item.slug}`} className="deep-link">
+                <Link to={`/${item.slug}`} className="deep-link">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3">
                     <path d="M7 7h10v10M7 17L17 7" />
                   </svg>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -301,16 +250,21 @@ export default function Navbar() {
       <div className={`mobile-menu ${menuOpen ? 'active' : ''}`}>
         <nav className="mobile-nav">
           {navItems.map((item) => (
-            <div className="mobile-nav-item" key={item.slug}>
-              <a href={`#${item.slug}`} className="mobile-scroll-link" onClick={closeMenu}>
-                {item.name}
-              </a>
+            <Link
+              to={`/${item.slug}`}
+              className="mobile-nav-item"
+              key={item.slug}
+              onClick={() => setMenuOpen(false)}
+            >
+              <span className="mobile-scroll-link">
+                {item.slug === 'portfolio' ? 'PORTFOLIO' : item.name}
+              </span>
               <div style={{ color: '#ff4d00' }}>
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="3">
                   <path d="M7 7h10v10M7 17L17 7" />
                 </svg>
               </div>
-            </div>
+            </Link>
           ))}
         </nav>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function HeroSection() {
   const slideRef = useRef(null);
@@ -228,13 +229,11 @@ export default function HeroSection() {
       <section className="hero-section" id="heroSection">
         <div className="mesh-gradient" />
 
-        {/* Background decorative typography */}
         <div className="bg-text" aria-hidden="true">
           <span>POINT</span>
           <span>VIRGUL</span>
         </div>
 
-        {/* Thin accent bar */}
         <div className="accent-bar" />
 
         <div className="slide" ref={slideRef}>
@@ -248,8 +247,10 @@ export default function HeroSection() {
             </h1>
 
             <div className="hero-actions">
-              <a href="#contact" className="btn-primary">Démarrer un Projet &nbsp;→</a>
-              <a href="#methodology" className="btn-secondary">Découvrir Notre Approche</a>
+              <div className="hero-actions">
+                <Link to="/Contact" className="btn-primary">Démarrer un Projet &nbsp;→</Link>
+                <Link to="/StrategicApproach" className="btn-secondary">Découvrir Notre Approche</Link>
+              </div>
             </div>
 
             <p className="credibility-line">

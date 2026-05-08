@@ -19,7 +19,7 @@ export default function Navbar() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsFlipped(prev => !prev);
-    }, 2500);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);

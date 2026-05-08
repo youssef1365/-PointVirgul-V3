@@ -8,7 +8,7 @@ const projects = [
     details: "Repositionner un riad en une expérience premium, et convertir en direct booking.",
     tags: "Branding — Site web (réservation) — Photo / Vidéo",
     category: "+67% de réservations directes en 90 jours",
-    images: ['/zyo-1.webp', '/frame-placeholder.webp', '/frame-placeholder.webp']
+    images: ['/zyo-1.webp', '/zyo-3.webp', '/ZYO-NEW.webp']
   },
   {
     id: "02",
@@ -17,7 +17,7 @@ const projects = [
     details: "Construire une marque premium à partir d'un savoir-faire local, de l'identité jusqu'au digital.",
     tags: "Branding — Packaging — E-commerce — Direction Artistique",
     category: "0 à 2 100 abonnés Instagram en 4 mois",
-    images: ['/zagoura-web.webp', '/JZ-1.webp', '/frame-placeholder.webp']
+    images: ['/zagoura-web.webp', '/zagoura-1.webp', '/JZ-1.webp']
   },
   {
     id: "03",
@@ -26,7 +26,7 @@ const projects = [
     details: "Donner à une clinique établie une présence digitale à la hauteur de son niveau de soin.",
     tags: "Site web — UX/UI — SEO — Optimisation Google Business",
     category: "+89% de vues Google Business en 60 jours",
-    images: ['/CIK-1.webp', '/CIK-2.webp', '/CIK-4.webp']
+    images: ['/IBN-KHALDOUN.webp', '/CIK-2.webp', '/CIK-4.webp']
   },
   {
     id: "04",
@@ -35,7 +35,7 @@ const projects = [
     details: "Restructurer un écosystème digital fragmenté en système de croissance scalable.",
     tags: "Identité Visuelle — Site web — Landing Pages — Architecture Data",
     category: "+54% de conversion sur les landing pages",
-    images: ['/wink-1.webp', '/wink-2.webp', '/wink-3.webp']
+    images: ['/wink-1.webp', '/wink-2.webp', '/WINK-LANDING.webp']
   },
   {
     id: "05",
@@ -44,7 +44,7 @@ const projects = [
     details: "De l'idée au naming, de l'identité à la boutique en ligne — une marque construite de zéro.",
     tags: "Brand Naming — Identité Visuelle — Direction Artistique — Site E-commerce",
     category: "Premières ventes en ligne dans les 72h suivant le lancement",
-    images: ['/Kaina-4.webp', '/kaina-3.webp', '/Kaina-1.webp']
+    images: ['/KAINA.webp', '/KAINA-NAKED.webp', '/Kaina-1.webp']
   },
   {
     id: "06",
@@ -53,7 +53,7 @@ const projects = [
     details: "Transformer une ambition immobilière forte en architecture de marque claire et activable.",
     tags: "Positionnement — Rebranding — Digital — Campagnes Résidentielles",
     category: "Projet en cours — Lancement Q3 2025",
-    images: ['/TAQES.webp', '/TAQES-3.webp', '/TAQES-2.webp']
+    images: ['/TAQES.webp', '/taqes4.webp', '/TAQES-2.webp']
   }
 ];
 
@@ -178,7 +178,6 @@ const Portfolio = () => {
         }
       `}</style>
 
-      {/* ADDED: Lightbox render */}
       {selectedImg && (
         <div className="lightbox-overlay" onClick={() => setSelectedImg(null)}>
           <img src={selectedImg} alt="Lightbox" className="lightbox-img" />

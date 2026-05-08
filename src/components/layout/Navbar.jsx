@@ -12,9 +12,17 @@ const navItems = [
 export default function Navbar() {
   const headerRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  // Permanent Language State
   const [lang, setLang] = useState(localStorage.getItem('site_lang') || 'EN');
   const location = useLocation();
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsFlipped(prev => !prev);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,8 +122,14 @@ export default function Navbar() {
         .portfolio-flip .lang-wrap {
           display: flex;
           flex-direction: column;
+          transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+          transform: translateY(${isFlipped ? '0' : '-50%'});
+        }
+
+        .portfolio-flip .lang-wrap {
+          display: flex;
+          flex-direction: column;
           transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-          /* Match initial state to current language */
           transform: translateY(${lang === 'AR' ? '0' : '-50%'});
         }
 
@@ -251,7 +265,7 @@ export default function Navbar() {
             >
               <span className="mobile-scroll-link">
                 {item.slug === 'Portfolio'
-                  ? (lang === 'EN' ? 'PORTFOLIO' : 'بورتفوليو')
+                  ? (isFlipped ? 'بورتفوليو' : 'PORTFOLIO')
                   : item.name}
               </span>
               <div style={{ color: '#ff4d00' }}>

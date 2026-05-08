@@ -9,6 +9,7 @@ import Portfolio from '@/components/sections/Portfolio';
 import Services from '@/components/sections/Services';
 import FAQ from '@/components/sections/FAQs';
 import Contact from '@/components/sections/Contact';
+import Virgul from '@/components/sections/Virgul';
 
 const ProjectStatement = () => (
   <section className="project-statement-wrap">
@@ -191,7 +192,7 @@ export default function App() {
         <SectionDivider />
 
         <div id="portfolio"><Portfolio /></div>
-
+        <SectionDivider />
         <div id="services"><Services /></div>
 
         <SectionDivider />
@@ -199,6 +200,11 @@ export default function App() {
         <SectionDivider />
 
         <div id="faq"><FAQ /></div>
+        <SectionDivider />
+        <div id="virgul">
+            <Virgul />
+        </div>
+        <SectionDivider />
 
         <div id="Contact"><Contact /></div>
 

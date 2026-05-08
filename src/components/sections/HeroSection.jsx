@@ -249,7 +249,7 @@ export default function HeroSection() {
             <div className="hero-actions">
               <div className="hero-actions">
                 <Link to="/Contact" className="btn-primary">Démarrer un Projet &nbsp;→</Link>
-                <Link to="/StrategicApproach" className="btn-secondary">Découvrir Notre Approche</Link>
+                <Link to="/strategicapproach" className="btn-secondary">Découvrir Notre Approche</Link>
               </div>
             </div>
 

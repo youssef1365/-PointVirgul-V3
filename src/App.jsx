@@ -183,7 +183,7 @@ export default function App() {
       <main>
         <div id="home"><HeroSection /></div>
 
-        <div id="StrategicApproach">
+        <div id="strategicapproach">
           <Methodology />
           <ProjectStatement />
         </div>
@@ -203,7 +203,7 @@ export default function App() {
         <div id="contact"><Contact /></div>
 
         <Routes>
-          <Route path="/StrategicApproach" element={null} />
+          <Route path="/strategicapproach" element={null} />
           <Route path="/" element={null} />
           <Route path="/home" element={null} />
           <Route path="/Portfolio" element={null} />

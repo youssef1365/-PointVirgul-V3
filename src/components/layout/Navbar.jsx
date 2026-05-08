@@ -16,13 +16,13 @@ export default function Navbar() {
     const handleScroll = () => {
       headerRef.current?.classList.toggle('glass-active', window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle('menu-open', menuOpen);
-    return () => document.body.classList.remove('menu-open');
+    // Prevent body scroll when menu is open on mobile
+    document.body.style.overflow = menuOpen ? 'hidden' : 'unset';
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
@@ -32,6 +32,7 @@ export default function Navbar() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@900&display=swap');
 
+        /* FIXED HEADER WRAPPER */
         .main-header {
           display: grid;
           grid-template-columns: 1fr auto 1fr;
@@ -42,34 +43,26 @@ export default function Navbar() {
           left: 0;
           right: 0;
           z-index: 1000;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           background: transparent;
+          transition: padding 0.4s ease, background 0.4s ease;
         }
 
         .main-header.glass-active {
           padding: 12px 3rem;
-          background: rgba(33, 54, 81, 0.01);
-          backdrop-filter: blur(20px) saturate(180%);
-          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          background: rgba(11, 28, 30, 0.8); /* Fixed background color */
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo { justify-self: start; }
-
-        .logo a {
-          display: inline-block;
-          line-height: 0;
-        }
-
         .logo img {
           height: 55px;
-          width: 150px;
+          width: auto;
           display: block;
-          transition: opacity 0.3s ease;
         }
 
         .desktop-nav { justify-self: center; }
-
         .desktop-nav ul {
           display: flex;
           gap: 2.5rem;
@@ -91,22 +84,9 @@ export default function Navbar() {
           font-size: 0.8rem;
           color: #fff;
           text-decoration: none;
-          transition: color 0.3s ease;
         }
 
-        .deep-link {
-          opacity: 0;
-          transform: translateX(-5px);
-          transition: all 0.3s ease;
-          color: var(--orange);
-          display: flex;
-        }
-
-        .nav-item-group:hover .deep-link {
-          opacity: 1;
-          transform: translateX(0);
-        }
-
+        /* YOUR ORIGINAL PORTFOLIO FLIP */
         .portfolio-flip {
           display: inline-block;
           width: 105px;
@@ -136,71 +116,52 @@ export default function Navbar() {
           font-size: 0.8rem;
           color: #fff;
           white-space: nowrap;
-          transition: color 0.3s ease;
-        }
-
-        .nav-item-group:hover .portfolio-flip .lang,
-        .nav-item-group:hover .scroll-link {
-          color: var(--orange);
         }
 
         .portfolio-flip .lang.arabic {
           font-family: 'Tajawal', sans-serif;
           letter-spacing: 0;
           font-size: 1.1rem;
-          padding-bottom: 2px;
         }
 
-        .header-right { justify-self: end; }
-
-        .menu-toggle {
-          display: none;
-          flex-direction: column;
-          gap: 8px;
-          cursor: pointer;
-          position: relative;
-          z-index: 1001;
-          background: none;
-          border: none;
-          padding: 0;
+        /* ORANGE HOVER COLOR */
+        .nav-item-group:hover .scroll-link,
+        .nav-item-group:hover .lang,
+        .nav-item-group:hover .deep-link {
+          color: #ff4d00; /* Your brand orange */
         }
 
-        .menu-toggle .line {
-          width: 28px;
-          height: 2px;
-          background-color: #fff;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .deep-link {
+          opacity: 0;
+          transform: translateX(-5px);
+          transition: all 0.3s ease;
+          color: #fff;
+          display: flex;
         }
 
-        .menu-toggle.active .line:nth-child(1) {
-          transform: translateY(5px) rotate(45deg);
+        .nav-item-group:hover .deep-link {
+          opacity: 1;
+          transform: translateX(0);
         }
 
-        .menu-toggle.active .line:nth-child(2) {
-          transform: translateY(-5px) rotate(-45deg);
-        }
-
+        /* MOBILE OVERLAY FIXED */
         .mobile-menu {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100vh;
-          background-color: var(--charcoal);
+          background-color: #0b1c1e; /* Solid background for mobile */
           z-index: 999;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          align-items: center;
-          opacity: 0;
-          visibility: hidden;
+          padding: 0 10%;
           transform: translateY(-100%);
-          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .mobile-menu.active {
-          opacity: 1;
-          visibility: visible;
           transform: translateY(0);
         }
 
@@ -208,8 +169,6 @@ export default function Navbar() {
           display: flex;
           flex-direction: column;
           gap: 2rem;
-          width: 100%;
-          padding: 0 10%;
         }
 
         .mobile-nav-item {
@@ -226,44 +185,42 @@ export default function Navbar() {
           text-transform: uppercase;
           color: #fff;
           text-decoration: none;
-          letter-spacing: 0.05em;
         }
 
-        .mobile-portfolio-link {
-          font-family: 'Tajawal', sans-serif;
+        .header-right { justify-self: end; }
+
+        .menu-toggle {
+          display: none;
+          flex-direction: column;
+          gap: 8px;
+          cursor: pointer;
+          background: none;
+          border: none;
+          padding: 10px;
+          z-index: 1001;
         }
 
-        .mobile-deep-link {
-          color: var(--orange);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 44px;
-          height: 44px;
-          border: 1px solid var(--orange);
-          border-radius: 50%;
-          transition: all 0.3s ease;
-          flex-shrink: 0;
+        .menu-toggle .line {
+          width: 28px;
+          height: 2px;
+          background-color: #fff;
+          transition: 0.3s ease;
         }
 
-        body.menu-open { overflow: hidden; }
+        .menu-toggle.active .line:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+        .menu-toggle.active .line:nth-child(2) { transform: translateY(-5px) rotate(-45deg); }
 
         @media (max-width: 1024px) {
-          .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-          }
-          .logo img { height: 32px; width: auto; }
+          .main-header { display: flex; justify-content: space-between; padding: 1.5rem 2rem; }
           .desktop-nav { display: none; }
           .menu-toggle { display: flex; }
+          .logo img { height: 35px; }
         }
       `}</style>
 
-      <header className="main-header" ref={headerRef} id="main-header">
+      <header className="main-header" ref={headerRef}>
         <div className="logo">
-          <a href="/"><div style={{width: '150px', height: '55px'}} /></a>
+          <a href="#"><img src="/SHORT.webp" alt="Point Virgul" /></a>
         </div>
 
         <nav className="desktop-nav">
@@ -295,8 +252,7 @@ export default function Navbar() {
         <div className="header-right">
           <button
             className={`menu-toggle ${menuOpen ? 'active' : ''}`}
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-label="Toggle menu"
+            onClick={() => setMenuOpen(!menuOpen)}
           >
             <div className="line" />
             <div className="line" />
@@ -308,18 +264,14 @@ export default function Navbar() {
         <nav className="mobile-nav">
           {navItems.map((item) => (
             <div className="mobile-nav-item" key={item.slug}>
-              <a
-                href={`#${item.slug}`}
-                className={`mobile-scroll-link${item.slug === 'portfolio' ? ' mobile-portfolio-link' : ''}`}
-                onClick={closeMenu}
-              >
+              <a href={`#${item.slug}`} className="mobile-scroll-link" onClick={closeMenu}>
                 {item.name}
               </a>
-              <a href={`/${item.slug}`} className="mobile-deep-link" onClick={closeMenu}>
+              <div style={{ color: '#ff4d00' }}>
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="3">
                   <path d="M7 7h10v10M7 17L17 7" />
                 </svg>
-              </a>
+              </div>
             </div>
           ))}
         </nav>

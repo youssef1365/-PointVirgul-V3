@@ -13,13 +13,6 @@ export default function HeroSection() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;700&display=swap');
 
-        :root {
-          --brand-primary: #0e1a1d;
-          --brand-accent: #e8622a;
-          --brand-light: #ffffff;
-          --brand-pale: rgba(255,255,255,0.55);
-        }
-
         .hero-section {
           width: 100vw;
           min-height: 100vh;

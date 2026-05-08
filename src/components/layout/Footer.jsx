@@ -1,5 +1,4 @@
 import React from 'react';
-/* import logoImage from '../../assets/agencylogo.png'; */
 
 const Footer = () => {
   const quickLinks = [
@@ -347,17 +346,21 @@ const Footer = () => {
 
       <div className="pv-main">
         <div className="pv-brand-col">
-          {/* Uncomment when logo image is available */}
-          {/* <img src={logoImage} alt="Point Virgul" style={{ height: 60, marginBottom: '1.5rem' }} /> */}
-          <h2 className="pv-wordmark">POINT VIRGUL<span>;</span></h2>
+          <img src="/STACK.webp" alt="Point Virgul" style={{ height: 150, width: 270, marginBottom: '1.5rem' }} />
+          {/*<h2 className="pv-wordmark">POINT VIRGUL<span>;</span></h2>*/}
           <p className="pv-tagline">Expériences digitales &amp; design de précision</p>
 
           <div className="pv-contact-block">
             <p className="pv-label">Adresse</p>
-            <p className="pv-address">
+            <a href="https://www.google.com/maps/search/?api=1&query=Angle+Rue+Reine+Elisabeth+Rue+Moulay+Abdellah+Kenitra+Maroc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pv-address"
+              style={{ cursor: 'pointer', textDecoration: 'none' }}
+            >
               Angle Rue Reine Elisabeth &amp; Rue Moulay Abdellah<br />
               Bureau 14 – Étage 5 — Kénitra, Maroc
-            </p>
+            </a>
 
             <p className="pv-label">Téléphone</p>
             <a href="tel:+212661613471" className="pv-phone-link">+212 6 61 61 34 71</a>

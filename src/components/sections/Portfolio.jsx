@@ -73,7 +73,7 @@ const Portfolio = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeIndex]);
 
@@ -91,6 +91,7 @@ const Portfolio = () => {
 
   return (
     <section
+      id="portfolio"
       className="portfolio-section"
       ref={sectionRef}
       style={{ height: `${projects.length * 100}vh` }}
@@ -210,6 +211,7 @@ const Portfolio = () => {
           position: absolute;
           border: 1px solid rgba(136, 179, 198, 0.4);
           background: rgba(255, 255, 255, 0.03);
+          -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
           transition: transform 0.5s ease;
           box-shadow: 0 30px 60px rgba(0,0,0,0.4);
@@ -290,8 +292,8 @@ const Portfolio = () => {
               </div>
 
               <div className="visual-comp">
-                <div className="frame frame-1"></div>
-                <div className="frame frame-2"></div>
+                <div className="frame frame-1" />
+                <div className="frame frame-2" />
               </div>
             </div>
           );
@@ -301,8 +303,12 @@ const Portfolio = () => {
           {projects.map((_, i) => (
             <div
               key={i}
+              role="button"
+              tabIndex={0}
+              aria-label={`Aller au projet ${i + 1}`}
               className={`dot ${i === activeIndex ? 'active' : ''}`}
               onClick={() => scrollToProject(i)}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && scrollToProject(i)}
             />
           ))}
         </div>

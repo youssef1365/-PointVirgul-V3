@@ -14,7 +14,7 @@ const ProjectStatement = () => {
     <section className="transition-wrapper">
       <style>{`
         .transition-wrapper {
-          background-color: var(--charcoal);
+          background-color: var(--brand-primary);
           padding-bottom: 40px;
           padding-top : 1px;
           display: flex;
@@ -65,7 +65,7 @@ const SectionDivider = () => (
           width: 100%;
           display: flex;
           justify-content: center;
-          background-color: var(--charcoal);
+          background-color: var(--brand-primary);
           padding: 0 5%;
         }
 
@@ -96,7 +96,7 @@ const BrandTransition = () => {
     <section className="brand-transition">
       <style>{`
         .brand-transition {
-          background-color: var(--charcoal);
+          background-color: var(--brand-primary);
           width: 100%;
           height: 40vh;
           display: flex;

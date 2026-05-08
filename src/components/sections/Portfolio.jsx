@@ -8,7 +8,7 @@ const projects = [
     details: "Repositionner un riad en une expérience premium, et convertir en direct booking.",
     tags: "Branding — Site web (réservation) — Photo / Vidéo",
     category: "+67% de réservations directes en 90 jours",
-    images: ['/frame-placeholder.webp', '/frame-placeholder.webp', '/frame-placeholder.webp']
+    images: ['/zyo-1.webp', '/frame-placeholder.webp', '/frame-placeholder.webp']
   },
   {
     id: "02",
@@ -17,7 +17,7 @@ const projects = [
     details: "Construire une marque premium à partir d'un savoir-faire local, de l'identité jusqu'au digital.",
     tags: "Branding — Packaging — E-commerce — Direction Artistique",
     category: "0 à 2 100 abonnés Instagram en 4 mois",
-    images: ['/frame-placeholder.webp', '/frame-placeholder.webp', '/frame-placeholder.webp']
+    images: ['/zagoura-web.webp', '/JZ-1.webp', '/frame-placeholder.webp']
   },
   {
     id: "03",
@@ -44,7 +44,7 @@ const projects = [
     details: "De l'idée au naming, de l'identité à la boutique en ligne — une marque construite de zéro.",
     tags: "Brand Naming — Identité Visuelle — Direction Artistique — Site E-commerce",
     category: "Premières ventes en ligne dans les 72h suivant le lancement",
-    images: ['/frame-placeholder.webp', '/frame-placeholder.webp', '/frame-placeholder.webp']
+    images: ['/Kaina-4.webp', '/kaina-3.webp', '/Kaina-1.webp']
   },
   {
     id: "06",
@@ -53,7 +53,7 @@ const projects = [
     details: "Transformer une ambition immobilière forte en architecture de marque claire et activable.",
     tags: "Positionnement — Rebranding — Digital — Campagnes Résidentielles",
     category: "Projet en cours — Lancement Q3 2025",
-    images: ['/frame-placeholder.webp', '/frame-placeholder.webp', '/frame-placeholder.webp']
+    images: ['/TAQES.webp', '/TAQES-3.webp', '/TAQES-2.webp']
   }
 ];
 
@@ -106,11 +106,13 @@ const Portfolio = () => {
 
         .visual-comp {
           flex: 1;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 1.5rem;
+          height: 70vh;
+          padding: 2rem;
+          perspective: 1000px;
         }
 
         .image-stack {
@@ -122,22 +124,33 @@ const Portfolio = () => {
 
         .single-image-right {
           width: 350px;
+          height: 100%;
         }
 
         .frame {
           position: relative;
-          overflow: hidden;
-          border-radius: 20px;
+          border-radius: 24px;
           border: 1px solid rgba(255, 255, 255, 0.1);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(0, 0, 0, 0.2);
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .frame:nth-child(3) {
+          grid-column: 2;
+          grid-row: 1 / span 2;
         }
 
         .frame-image {
-          display: block;
           width: 100%;
-          height: auto;
+          height: 100%;
           object-fit: cover;
+          object-position: center;
+          display: block;
+          transition: transform 0.5s ease;
         }
 
         .nav-indicators { position: absolute; bottom: 4rem; right: 5%; display: flex; flex-direction: column; gap: 1.2rem; z-index: 100; }

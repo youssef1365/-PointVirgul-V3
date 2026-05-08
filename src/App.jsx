@@ -129,7 +129,7 @@ export default function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const targetId = pathname.replace("/", "");
+    const targetId = pathname.replace("/", "").toLowerCase();
 
     const scrollTask = setTimeout(() => {
       const element = document.getElementById(targetId);
@@ -206,11 +206,11 @@ export default function App() {
           <Route path="/StrategicApproach" element={null} />
           <Route path="/" element={null} />
           <Route path="/home" element={null} />
-          <Route path="/portfolio" element={null} />
-          <Route path="/services" element={null} />
+          <Route path="/Portfolio" element={null} />
+          <Route path="/Services" element={null} />
           <Route path="/virgul" element={null} />
           <Route path="/faq" element={null} />
-          <Route path="/contact" element={null} />
+          <Route path="/Contact" element={null} />
         </Routes>
       </main>
 

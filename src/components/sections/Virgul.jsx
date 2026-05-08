@@ -12,8 +12,47 @@ const Virgul = () => {
 
   return (
     <div style={{ backgroundColor: 'var(--brand-primary)', color: 'var(--color-white)' }}>
-      <section style={styles.container}>
-        <div style={styles.content}>
+      {/* CSS Block for Cross-Platform Conformity */}
+      <style>{`
+        .virgul-section {
+          width: 100%;
+          overflow: hidden;
+        }
+
+        /* Desktop: Matching the 'extended line' pillar look */
+        @media (min-width: 901px) {
+          .stats-grid-conformity {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* The horizontal T-intersection */
+          }
+        }
+
+        /* Mobile: Prevents desktop breakage */
+        @media (max-width: 900px) {
+          .hero-content {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          .hero-divider {
+            display: none !important;
+          }
+          .stats-grid-conformity {
+            grid-template-columns: 1fr !important;
+          }
+          .stat-box-conformity {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            padding: 40px 20px !important;
+          }
+          .stat-text-conformity {
+            white-space: normal !important;
+          }
+        }
+      `}</style>
+
+      <section style={styles.container} className="virgul-section">
+        <div style={styles.content} className="hero-content">
           <div style={styles.leftColumn}>
             <div style={styles.brandBadge}>
                <span style={styles.dash}>—</span> POINT VIRGUL
@@ -26,7 +65,7 @@ const Virgul = () => {
             </h1>
           </div>
 
-          <div style={styles.divider}></div>
+          <div style={styles.divider} className="hero-divider"></div>
 
           <div style={styles.rightColumn}>
             <p style={styles.description}>
@@ -47,21 +86,21 @@ const Virgul = () => {
       </section>
 
       <section style={styles.statsSection}>
-        <div style={styles.statsGrid}>
+        <div style={styles.statsGrid} className="stats-grid-conformity">
           {stats.map((stat, index) => (
             <div
               key={index}
+              className="stat-box-conformity"
               style={{
                 ...styles.statBox,
-                // Vertical dividers only between columns 1-2 and 2-3
+                // These borders create the structural pillars seen in your images
                 borderRight: (index + 1) % 3 === 0 ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
-                // Horizontal divider only between the top row and bottom row
                 borderBottom: index < 3 ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
               }}
             >
               <h2 style={styles.number}>{stat.num}</h2>
               <div style={styles.statUnderline}></div>
-              <p style={styles.statText}>{stat.text}</p>
+              <p style={styles.statText} className="stat-text-conformity">{stat.text}</p>
             </div>
           ))}
         </div>
@@ -97,7 +136,7 @@ const styles = {
     color: 'var(--brand-orange)',
   },
   headline: {
-    fontSize: '4rem',
+    fontSize: 'clamp(2.5rem, 5vw, 4rem)', // Responsive text
     lineHeight: '1.1',
     fontWeight: '800',
     margin: 0,
@@ -148,7 +187,7 @@ const styles = {
   },
   number: {
     color: 'var(--text-main)',
-    fontSize: '5.5rem',
+    fontSize: 'clamp(3rem, 8vw, 5.5rem)',
     fontWeight: '900',
     margin: '0',
     lineHeight: '1',

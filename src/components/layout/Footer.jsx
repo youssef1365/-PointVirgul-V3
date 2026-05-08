@@ -352,7 +352,7 @@ const Footer = () => {
 
           <div className="pv-contact-block">
             <p className="pv-label">Adresse</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=Angle+Rue+Reine+Elisabeth+Rue+Moulay+Abdellah+Kenitra+Maroc"
+            <a href="https://www.google.com/maps/dir//Agence+Point+Virgul,+Bureau+N%C2%BA14+%C3%89tage+5,+Angle+Rue+Reine+%C3%89lisabeth+Et,+Rue+Moulay+Abdellah,+K%C3%A9nitra+14000/@34.2668978,-6.6003798,13z/data=!4m8!4m7!1m0!1m5!1m1!1s0x646f8f7a260037e9:0xd2553625b905bcf4!2m2!1d-6.5831285!2d34.2609114?hl=fr-MA&entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
               target="_blank"
               rel="noopener noreferrer"
               className="pv-address"

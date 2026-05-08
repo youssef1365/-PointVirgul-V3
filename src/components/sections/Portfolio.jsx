@@ -5,7 +5,7 @@ const projects = [
     id: "01",
     name: "RIAD ZYO",
     desc: "HOTEL BOUTIQUE ART - Rabat",
-    details: "Repositionner un riad en une expérience premium,  et convertir en direct booking.",
+    details: "Repositionner un riad en une expérience premium, et convertir en direct booking.",
     tags: "Branding — Site web (réservation) — Photo / Vidéo",
     category: "+67% de réservations directes en 90 jours"
   },
@@ -64,16 +64,24 @@ const Portfolio = () => {
       const viewHeight = window.innerHeight;
 
       const scrollDistance = -rect.top;
-      const progress = scrollDistance / (sectionHeight - viewHeight);
-      const clampedProgress = Math.max(0, Math.min(1, progress));
-      const newIndex = Math.round(clampedProgress * (projects.length - 1));
+      const totalScrollable = sectionHeight - viewHeight;
 
-      if (newIndex !== activeIndex) {
+      const progress = scrollDistance / totalScrollable;
+      const clampedProgress = Math.max(0, Math.min(1, progress));
+
+      // Fixed: Floor logic for mobile momentum scroll stability
+      const newIndex = Math.min(
+        Math.floor(clampedProgress * projects.length),
+        projects.length - 1
+      );
+
+      if (newIndex !== activeIndex && newIndex >= 0) {
         setActiveIndex(newIndex);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeIndex]);
 
@@ -110,6 +118,7 @@ const Portfolio = () => {
           overflow: hidden;
           display: flex;
           align-items: center;
+          touch-action: pan-y; /* FIX: Allows scrolling on mobile */
         }
 
         .slide-layer {
@@ -152,9 +161,9 @@ const Portfolio = () => {
         }
 
         .slide-name {
-          font-size: clamp(3rem, 6vw, 5.5rem);
+          font-size: clamp(2.5rem, 6vw, 5.5rem);
           font-weight: 900;
-          color: var(--text-main);
+          color: var(--color-white);
           line-height: 0.99;
           margin: 0;
           text-transform: uppercase;
@@ -211,7 +220,6 @@ const Portfolio = () => {
           position: absolute;
           border: 1px solid rgba(136, 179, 198, 0.4);
           background: rgba(255, 255, 255, 0.03);
-          -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
           transition: transform 0.5s ease;
           box-shadow: 0 30px 60px rgba(0,0,0,0.4);
@@ -260,6 +268,21 @@ const Portfolio = () => {
           opacity: 1;
           transform: scale(2.2);
           box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+          .slide-layer {
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8%;
+          }
+          .slide-content {
+            flex: 0 0 auto;
+            width: 100%;
+          }
+          .visual-comp {
+            display: none; /* Perf fix for mobile scroll */
+          }
         }
       `}</style>
 

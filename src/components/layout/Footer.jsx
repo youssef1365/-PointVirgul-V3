@@ -203,7 +203,7 @@ const Footer = () => {
           <p className="pv-tagline">Design de précision &amp; Stratégie</p>
           <p className="pv-label">Localisation</p>
           <a
-            href="https://maps.google.com/?q=Rue+Reine+Elisabeth+Moulay+Abdellah+Kenitra"
+            href="https://share.google/UW1iK6VgAEbfFrKpp"
             target="_blank" rel="noopener noreferrer"
             className="pv-address"
           >

@@ -15,10 +15,12 @@ const MATURITE_OPTIONS = [
   { value: 'partenaire', label: "Je cherche un partenaire long terme" }
 ];
 
+// ── "À définir ensemble" added as first option ────────────────────────────────
 const BUDGET_OPTIONS = [
-  { value: '10-30k', label: '10–30k' },
-  { value: '30-80k', label: '30–80k' },
-  { value: '80k+',   label: '80k+' }
+  { value: 'a-definir', label: 'À définir ensemble' },
+  { value: '10-30k',    label: '10–30k MAD' },
+  { value: '30-80k',    label: '30–80k MAD' },
+  { value: '80k+',      label: '80k+ MAD' }
 ];
 
 const SOURCE_OPTIONS = [
@@ -41,7 +43,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...' }) => {
+const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...', helpText }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -57,11 +59,14 @@ const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélecti
     <div className="input-group" ref={ref}>
       <label>{label}</label>
       <div className="custom-trigger" onClick={() => setOpen(o => !o)}>
+        {/* ── Selected text in pure white, placeholder greyed ── */}
         <span style={{ color: selected ? '#fff' : 'rgba(255,255,255,0.3)' }}>
           {selected ? selected.label : placeholder}
         </span>
         <ChevronIcon />
       </div>
+      {/* ── Micro-texte d'aide (budget field) ── */}
+      {helpText && <p className="field-help">{helpText}</p>}
       {open && (
         <div className="dropdown-list">
           {options.map(opt => {
@@ -83,7 +88,7 @@ const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélecti
   );
 };
 
-// ── Multi-select custom dropdown (Besoin pattern) ─────────────────────────────
+// ── Multi-select custom dropdown ──────────────────────────────────────────────
 const MultiSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...' }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -235,19 +240,22 @@ const Contact = () => {
           color: #ff4d00;
           letter-spacing: 0.2em;
         }
+
+        /* ── Pure white for typed text, grey for placeholders ── */
         .input-group input,
         .input-group textarea {
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.1);
           padding: 16px;
           font-size: 1rem;
-          color: #fff;
+          color: #ffffff;          /* pure white input text */
           outline: none;
           font-family: inherit;
           border-radius: 0;
           width: 100%;
           box-sizing: border-box;
           transition: border-color 0.2s;
+          caret-color: #ff4d00;
         }
         .input-group input::placeholder,
         .input-group textarea::placeholder { color: rgba(255,255,255,0.28); }
@@ -260,7 +268,7 @@ const Contact = () => {
           padding: 0 40px 0 16px;
           min-height: 56px;
           font-size: 1rem;
-          color: #fff;
+          color: #ffffff;          /* pure white */
           outline: none;
           font-family: inherit;
           border-radius: 0;
@@ -268,41 +276,23 @@ const Contact = () => {
           box-sizing: border-box;
           cursor: pointer;
           transition: border-color 0.2s;
-
-          /* Kill native styling */
           -webkit-appearance: none;
           -moz-appearance: none;
           appearance: none;
-
-          /* Custom orange chevron arrow */
           background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ff4d00' stroke-width='3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
           background-repeat: no-repeat;
           background-position: right 16px center;
+          -webkit-text-fill-color: #fff;
         }
-
-        .input-group select:hover {
-          border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .input-group select:focus {
-          border-color: rgba(255, 77, 0, 0.5);
-        }
-
-        /* Fix option colors in supported browsers */
+        .input-group select:hover { border-color: rgba(255,255,255,0.2); }
+        .input-group select:focus { border-color: rgba(255,77,0,0.5); }
         .input-group select option {
           background-color: #0d2224;
           color: #fff;
         }
-
-        /* iOS Safari: text color fix */
-        .input-group select {
-          -webkit-text-fill-color: #fff;
-        }
-
-        /* Placeholder option (disabled) */
         .input-group select option[disabled] {
-          color: rgba(255, 255, 255, 0.28);
-          -webkit-text-fill-color: rgba(255, 255, 255, 0.28);
+          color: rgba(255,255,255,0.28);
+          -webkit-text-fill-color: rgba(255,255,255,0.28);
         }
 
         .custom-trigger {
@@ -338,6 +328,7 @@ const Contact = () => {
           text-transform: uppercase;
         }
 
+        /* ── Dropdown with accentuated box-shadow for relief on dark bg ── */
         .dropdown-list {
           position: absolute;
           top: calc(100% + 4px);
@@ -348,7 +339,10 @@ const Contact = () => {
           z-index: 999;
           max-height: 280px;
           overflow-y: auto;
-          box-shadow: 0 12px 32px rgba(0,0,0,0.55);
+          box-shadow:
+            0 16px 48px rgba(0, 0, 0, 0.75),
+            0 4px 16px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(255, 77, 0, 0.12); /* subtle orange glow outline */
         }
         .dropdown-item {
           padding: 14px 18px;
@@ -374,6 +368,16 @@ const Contact = () => {
         .dropdown-item.active .custom-check {
           background: #ff4d00;
           border-color: #ff4d00;
+        }
+
+        /* ── Micro-texte d'aide sous le champ budget ── */
+        .field-help {
+          font-size: 0.65rem;
+          color: rgba(255,255,255,0.35);
+          margin: 0;
+          line-height: 1.5;
+          font-style: italic;
+          letter-spacing: 0.01em;
         }
 
         .full-width { grid-column: span 2; }
@@ -493,31 +497,31 @@ const Contact = () => {
                 onChange={set('maturite')}
               />
 
+              {/* ── Budget avec "À définir ensemble" + micro-texte d'aide ── */}
               <CustomSelect
                 label="Budget (MAD)"
                 options={BUDGET_OPTIONS}
                 value={formData.budget}
                 onChange={set('budget')}
+                helpText="Cette information nous permet d'ajuster l'envergure de nos recommandations."
               />
 
               <div className="input-group full-width">
-                             <label>Comment nous avez-vous trouvés ?</label>
-                             <select name="source" onChange={handleChange} defaultValue="">
-                               <option value="" disabled>Sélectionner...</option>
-                               <option value="social">Réseaux sociaux (Instagram / LinkedIn)</option>
-                               <option value="reco">Recommandation d'un proche</option>
-                               <option value="google">Recherche Google</option>
-                               <option value="client">Un client Point Virgul</option>
-                               <option value="autre">Autre</option>
-                             </select>
-                           </div>
+                <label>Comment nous avez-vous trouvés ?</label>
+                <select name="source" onChange={handleChange} defaultValue="">
+                  <option value="" disabled>Sélectionner...</option>
+                  <option value="social">Réseaux sociaux (Instagram / LinkedIn)</option>
+                  <option value="reco">Recommandation d'un proche</option>
+                  <option value="google">Recherche Google</option>
+                  <option value="client">Un client Point Virgul</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
 
               <div className="input-group full-width">
                 <label>Message</label>
                 <textarea name="message" rows="3" placeholder="Parlez-nous de votre projet..." onChange={handleChange} />
               </div>
-
-
 
               <div className="full-width">
                 <button type="submit" className="btn-submit">Démarrer mon projet →</button>

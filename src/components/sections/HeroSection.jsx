@@ -90,9 +90,10 @@ export default function HeroSection() {
           justify-content: center;
           align-items: flex-start;
           padding: 0 8%;
-          padding-top: 80px; /* offset for fixed header */
+          padding-top: 80px;
           position: relative;
           z-index: 2;
+          box-sizing: border-box;
         }
 
         .hero-content {
@@ -188,40 +189,85 @@ export default function HeroSection() {
           to { opacity: 1; }
         }
 
+        /* ── Tablet ── */
         @media (max-width: 768px) {
-          .slide {
-            padding: 0 6%;
-            padding-top: 80px;
+          .hero-section {
+            min-height: 100svh; /* svh = small viewport height, accounts for browser chrome */
           }
+
+          .slide {
+            min-height: 100svh;
+            padding: 0 6%;
+            padding-top: 72px;
+            padding-bottom: 36px;
+            justify-content: center;
+          }
+
+          .hero-content {
+            gap: 1.4rem;
+          }
+
           .hero-title {
-            font-size: clamp(2.4rem, 10vw, 3.8rem);
+            font-size: clamp(2.6rem, 11vw, 4rem);
             line-height: 0.92;
           }
+
           .bg-text span {
-            font-size: 35vw;
+            font-size: 38vw;
+            opacity: 0.03;
           }
+
           .hero-actions {
             flex-direction: column;
             width: 100%;
+            gap: 0.75rem;
           }
+
           .btn-primary,
           .btn-secondary {
             text-align: center;
             font-size: 0.65rem;
-            padding: 1rem 1.8rem;
+            padding: 0.95rem 1.6rem;
             width: 100%;
+            box-sizing: border-box;
+            white-space: normal;
           }
-          .accent-bar {
-            display: none;
+
+          .accent-bar { display: none; }
+
+          .credibility-line {
+            font-size: 0.58rem;
+            letter-spacing: 0.18em;
           }
         }
 
+        /* ── Small phones ── */
         @media (max-width: 480px) {
-          .hero-title {
-            font-size: 2.2rem;
+          .hero-section {
+            min-height: 100svh;
           }
+
           .slide {
-            padding-top: 80px;
+            min-height: 100svh;
+            padding-top: 68px;
+            padding-bottom: 28px;
+          }
+
+          .hero-content {
+            gap: 1.2rem;
+          }
+
+          .hero-title {
+            font-size: clamp(2.2rem, 12vw, 2.8rem);
+            line-height: 0.9;
+          }
+
+          /* Hide large bg text on very small screens — frees visual space */
+          .bg-text { display: none; }
+
+          .credibility-line {
+            font-size: 0.55rem;
+            letter-spacing: 0.14em;
           }
         }
       `}</style>
@@ -247,10 +293,8 @@ export default function HeroSection() {
             </h1>
 
             <div className="hero-actions">
-              <div className="hero-actions">
-                <Link to="/Contact" className="btn-primary">Démarrer un Projet &nbsp;→</Link>
-                <Link to="/approchestrategic" className="btn-secondary">Découvrir Notre Approche</Link>
-              </div>
+              <Link to="/Contact" className="btn-primary">Démarrer un Projet &nbsp;→</Link>
+              <Link to="/approchestrategic" className="btn-secondary">Découvrir Notre Approche</Link>
             </div>
 
             <p className="credibility-line">

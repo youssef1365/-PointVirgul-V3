@@ -77,9 +77,9 @@ const SemicolonExecute = () => (
 );
 
 const steps = [
-  { title: "ON COMPREND", icon: <SemicolonSearch />, description: "Asking the right questions to structure the unstructured" },
-  { title: "ON ALIGNE", icon: <SemicolonAlign />, description: "Transform challenges into a clear, actionable vision" },
-  { title: "ON EXÉCUTE", icon: <SemicolonExecute />, description: "Delivers results quickly and effectively" }
+  { title: "ON COMPREND", icon: <SemicolonSearch />, description: "On pose les bonnes questions pour structurer ce qui ne l’est pas." },
+  { title: "ON ALIGNE", icon: <SemicolonAlign />, description: "On transforme vos enjeux en une vision claire et actionnable." },
+  { title: "ON EXÉCUTE", icon: <SemicolonExecute />, description: "On concrétise vos idées en résultats, rapidement et efficacement.." }
 ];
 
 export default function Methodology() {

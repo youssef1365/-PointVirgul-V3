@@ -192,15 +192,13 @@ export default function HeroSection() {
         /* ── Tablet ── */
         @media (max-width: 768px) {
           .hero-section {
-            min-height: 100svh; /* svh = small viewport height, accounts for browser chrome */
+            min-height: auto;
           }
 
           .slide {
-            min-height: 100svh;
-            padding: 0 6%;
-            padding-top: 72px;
-            padding-bottom: 36px;
-            justify-content: center;
+            min-height: auto;
+            padding: 100px 6% 60px;
+            justify-content: flex-start;
           }
 
           .hero-content {
@@ -241,16 +239,14 @@ export default function HeroSection() {
           }
         }
 
-        /* ── Small phones ── */
         @media (max-width: 480px) {
           .hero-section {
-            min-height: 100svh;
+            min-height: auto;
           }
 
           .slide {
-            min-height: 100svh;
-            padding-top: 68px;
-            padding-bottom: 28px;
+            min-height: auto;
+             padding: 90px 6% 50px;
           }
 
           .hero-content {

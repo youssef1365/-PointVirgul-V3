@@ -16,10 +16,10 @@ const MATURITE_OPTIONS = [
 ];
 
 const BUDGET_OPTIONS = [
-  { value: 'a-definir', label: 'À définir ensemble' },
   { value: '10-30k',    label: '10–30k MAD' },
   { value: '30-80k',    label: '30–80k MAD' },
-  { value: '80k+',      label: '80k+ MAD' }
+  { value: '80k+',      label: '80k+ MAD' },
+  { value: 'a-definir', label: 'À définir ensemble' }
 ];
 
 const ChevronIcon = () => (
@@ -214,7 +214,7 @@ const Contact = () => {
           line-height: 1.2;
         }
         .form-legend {
-          font-size: 0.62rem;
+          font-size: 1rem;
           color: rgba(255,255,255,0.3);
           letter-spacing: 0.05em;
           margin-bottom: 32px;

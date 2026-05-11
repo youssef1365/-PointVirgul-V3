@@ -321,7 +321,6 @@ const Contact = () => {
           position: absolute;
           top: calc(100% + 4px);
           left: 0;
-          width: 100%;
           background: #0d2224;
           border: 1px solid rgba(255,255,255,0.18);
           z-index: 999;
@@ -333,6 +332,9 @@ const Contact = () => {
             0 0 0 1px rgba(255,77,0,0.12);
           scrollbar-width: thin;
           scrollbar-color: rgba(255,77,0,0.4) transparent;
+          right: 0;
+            width: auto;
+            max-width: 100%;
         }
         .dropdown-list::-webkit-scrollbar { width: 4px; }
         .dropdown-list::-webkit-scrollbar-track { background: transparent; }
@@ -413,7 +415,7 @@ const Contact = () => {
           .contact-card { grid-template-columns: 1fr; }
           .brand-sidebar { padding: 40px 24px; text-align: center; }
           .brand-sidebar h2 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
-          .form-area { padding: 40px 6%; }
+          .form-area { padding: 40px 24px; }
           .form-header-text { font-size: 1.5rem; margin-bottom: 6px; }
           .input-grid { grid-template-columns: 1fr; gap: 20px; }
           .full-width { grid-column: span 1; }
@@ -424,7 +426,7 @@ const Contact = () => {
 
         @media (max-width: 480px) {
           .brand-sidebar { padding: 32px 20px; }
-          .form-area { padding: 32px 5%; }
+          .form-area { padding: 32px 16px; }
           .form-header-text { font-size: 1.3rem; }
           .custom-trigger, .input-group input, .input-group textarea { font-size: 0.95rem; }
           .dropdown-item { font-size: 0.88rem; padding: 12px 14px; }

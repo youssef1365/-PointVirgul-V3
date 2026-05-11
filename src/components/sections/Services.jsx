@@ -274,7 +274,7 @@ const Services = () => {
           font-weight: 600;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.45);
+          color: rgba(255,255,255,0.7);
           padding: 0 40px;
           transition: color 0.3s ease;
         }
@@ -346,19 +346,7 @@ const Services = () => {
         ))}
       </div>
 
-      {/* CTA block */}
-      {/*}<div className="services-cta">
-        <p className="services-cta-text">
-          Un besoin précis ?{' '}
-          <em>On commence par en parler.</em>
-        </p>
-        <a href="#contact" className="services-cta-link">
-          Démarrer un projet
-          <span className="services-cta-arrow">→</span>
-        </a>
-      </div>*/}
 
-      {/* Scrolling ticker */}
       <div className="services-ticker">
         <div className="ticker-track">
           {[...tickerItems, ...tickerItems].map((item, i) => (

@@ -91,7 +91,7 @@ const BrandTransition = () => (
       .transition-tagline {
         font-size: clamp(0.9rem, 2vw, 1.2rem);
         font-weight: 800;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.7);
         margin-bottom: 2.5rem;
         text-transform: uppercase;
         letter-spacing: 0.4em;

@@ -15,7 +15,6 @@ const MATURITE_OPTIONS = [
   { value: 'partenaire', label: "Je cherche un partenaire long terme" }
 ];
 
-// ── "À définir ensemble" added as first option ────────────────────────────────
 const BUDGET_OPTIONS = [
   { value: 'a-definir', label: 'À définir ensemble' },
   { value: '10-30k',    label: '10–30k MAD' },
@@ -23,14 +22,6 @@ const BUDGET_OPTIONS = [
   { value: '80k+',      label: '80k+ MAD' }
 ];
 
-const SOURCE_OPTIONS = [
-  { value: 'social', label: 'Réseaux sociaux' },
-  { value: 'reco',   label: 'Recommandation' },
-  { value: 'google', label: 'Recherche Google' },
-  { value: 'autre',  label: 'Autre' }
-];
-
-// ── Shared icons ──────────────────────────────────────────────────────────────
 const ChevronIcon = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff4d00" strokeWidth="3" style={{ flexShrink: 0 }}>
     <path d="M6 9l6 6 6-6" />
@@ -43,7 +34,11 @@ const CheckIcon = () => (
   </svg>
 );
 
-const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...', helpText }) => {
+const Req = () => (
+  <span style={{ color: '#ff4d00', marginLeft: 4, fontSize: '0.7rem', verticalAlign: 'middle' }}>✦</span>
+);
+
+const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...', helpText, required }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -57,15 +52,13 @@ const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélecti
 
   return (
     <div className="input-group" ref={ref}>
-      <label>{label}</label>
+      <label>{label}{required && <Req />}</label>
       <div className="custom-trigger" onClick={() => setOpen(o => !o)}>
-        {/* ── Selected text in pure white, placeholder greyed ── */}
         <span style={{ color: selected ? '#fff' : 'rgba(255,255,255,0.3)' }}>
           {selected ? selected.label : placeholder}
         </span>
         <ChevronIcon />
       </div>
-      {/* ── Micro-texte d'aide (budget field) ── */}
       {helpText && <p className="field-help">{helpText}</p>}
       {open && (
         <div className="dropdown-list">
@@ -88,8 +81,7 @@ const CustomSelect = ({ label, options, value, onChange, placeholder = 'Sélecti
   );
 };
 
-// ── Multi-select custom dropdown ──────────────────────────────────────────────
-const MultiSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...' }) => {
+const MultiSelect = ({ label, options, value, onChange, placeholder = 'Sélectionner...', required }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -104,7 +96,7 @@ const MultiSelect = ({ label, options, value, onChange, placeholder = 'Sélectio
 
   return (
     <div className="input-group" ref={ref}>
-      <label>{label}</label>
+      <label>{label}{required && <Req />}</label>
       <div className="custom-trigger" onClick={() => setOpen(o => !o)}>
         <div className="selected-pills">
           {value.length > 0
@@ -134,7 +126,6 @@ const MultiSelect = ({ label, options, value, onChange, placeholder = 'Sélectio
   );
 };
 
-// ── Main Contact component ────────────────────────────────────────────────────
 const Contact = () => {
   const [formData, setFormData] = useState({
     nom: '', email: '', entreprise: '',
@@ -218,10 +209,18 @@ const Contact = () => {
         .form-header-text {
           font-size: 2rem;
           font-weight: 800;
-          margin-bottom: 40px;
+          margin-bottom: 8px;
           color: #fff;
           line-height: 1.2;
         }
+        .form-legend {
+          font-size: 0.62rem;
+          color: rgba(255,255,255,0.3);
+          letter-spacing: 0.05em;
+          margin-bottom: 32px;
+        }
+        .form-legend span { color: #ff4d00; margin-right: 4px; }
+
         .input-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -240,15 +239,13 @@ const Contact = () => {
           color: #ff4d00;
           letter-spacing: 0.2em;
         }
-
-        /* ── Pure white for typed text, grey for placeholders ── */
         .input-group input,
         .input-group textarea {
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.1);
           padding: 16px;
           font-size: 1rem;
-          color: #ffffff;          /* pure white input text */
+          color: #ffffff;
           outline: none;
           font-family: inherit;
           border-radius: 0;
@@ -263,12 +260,12 @@ const Contact = () => {
         .input-group textarea:focus { border-color: rgba(255,77,0,0.5); }
 
         .input-group select {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
           padding: 0 40px 0 16px;
           min-height: 56px;
           font-size: 1rem;
-          color: #ffffff;          /* pure white */
+          color: #ffffff;
           outline: none;
           font-family: inherit;
           border-radius: 0;
@@ -286,10 +283,7 @@ const Contact = () => {
         }
         .input-group select:hover { border-color: rgba(255,255,255,0.2); }
         .input-group select:focus { border-color: rgba(255,77,0,0.5); }
-        .input-group select option {
-          background-color: #0d2224;
-          color: #fff;
-        }
+        .input-group select option { background-color: #0d2224; color: #fff; }
         .input-group select option[disabled] {
           color: rgba(255,255,255,0.28);
           -webkit-text-fill-color: rgba(255,255,255,0.28);
@@ -313,12 +307,7 @@ const Contact = () => {
         }
         .custom-trigger:hover { border-color: rgba(255,255,255,0.2); }
 
-        .selected-pills {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 6px;
-          padding: 8px 0;
-        }
+        .selected-pills { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 0; }
         .pill {
           background: #ff4d00;
           color: #fff;
@@ -328,7 +317,6 @@ const Contact = () => {
           text-transform: uppercase;
         }
 
-        /* ── Dropdown with accentuated box-shadow for relief on dark bg ── */
         .dropdown-list {
           position: absolute;
           top: calc(100% + 4px);
@@ -340,10 +328,20 @@ const Contact = () => {
           max-height: 280px;
           overflow-y: auto;
           box-shadow:
-            0 16px 48px rgba(0, 0, 0, 0.75),
-            0 4px 16px rgba(0, 0, 0, 0.5),
-            0 0 0 1px rgba(255, 77, 0, 0.12); /* subtle orange glow outline */
+            0 16px 48px rgba(0,0,0,0.75),
+            0 4px 16px rgba(0,0,0,0.5),
+            0 0 0 1px rgba(255,77,0,0.12);
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255,77,0,0.4) transparent;
         }
+        .dropdown-list::-webkit-scrollbar { width: 4px; }
+        .dropdown-list::-webkit-scrollbar-track { background: transparent; }
+        .dropdown-list::-webkit-scrollbar-thumb {
+          background: rgba(255,77,0,0.4);
+          border-radius: 2px;
+        }
+        .dropdown-list::-webkit-scrollbar-thumb:hover { background: #ff4d00; }
+
         .dropdown-item {
           padding: 14px 18px;
           font-size: 0.95rem;
@@ -357,20 +355,13 @@ const Contact = () => {
         .dropdown-item:hover { background: rgba(255,255,255,0.06); }
         .dropdown-item.active { color: #ff4d00; }
         .custom-check {
-          width: 16px;
-          height: 16px;
+          width: 16px; height: 16px;
           border: 1.5px solid rgba(255,255,255,0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: flex; align-items: center; justify-content: center;
           flex-shrink: 0;
         }
-        .dropdown-item.active .custom-check {
-          background: #ff4d00;
-          border-color: #ff4d00;
-        }
+        .dropdown-item.active .custom-check { background: #ff4d00; border-color: #ff4d00; }
 
-        /* ── Micro-texte d'aide sous le champ budget ── */
         .field-help {
           font-size: 0.65rem;
           color: rgba(255,255,255,0.35);
@@ -423,7 +414,7 @@ const Contact = () => {
           .brand-sidebar { padding: 40px 24px; text-align: center; }
           .brand-sidebar h2 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
           .form-area { padding: 40px 6%; }
-          .form-header-text { font-size: 1.5rem; margin-bottom: 28px; }
+          .form-header-text { font-size: 1.5rem; margin-bottom: 6px; }
           .input-grid { grid-template-columns: 1fr; gap: 20px; }
           .full-width { grid-column: span 1; }
           .dropdown-list { max-height: 220px; }
@@ -466,15 +457,17 @@ const Contact = () => {
         ) : (
           <div className="form-area">
             <h3 className="form-header-text">Votre prochain chapitre commence ici.</h3>
+            <p className="form-legend"><span>✦</span> Champs obligatoires</p>
+
             <form className="input-grid" onSubmit={handleSubmit}>
 
               <div className="input-group">
-                <label>Prénom / Nom</label>
+                <label>Prénom / Nom <Req /></label>
                 <input type="text" name="nom" placeholder="Nom Complet" required onChange={handleChange} />
               </div>
 
               <div className="input-group">
-                <label>Email</label>
+                <label>Email <Req /></label>
                 <input type="email" name="email" placeholder="votre@email.com" required onChange={handleChange} />
               </div>
 
@@ -488,6 +481,7 @@ const Contact = () => {
                 options={BESOIN_OPTIONS}
                 value={formData.besoins}
                 onChange={set('besoins')}
+                required
               />
 
               <CustomSelect
@@ -497,7 +491,6 @@ const Contact = () => {
                 onChange={set('maturite')}
               />
 
-              {/* ── Budget avec "À définir ensemble" + micro-texte d'aide ── */}
               <CustomSelect
                 label="Budget (MAD)"
                 options={BUDGET_OPTIONS}
@@ -519,8 +512,8 @@ const Contact = () => {
               </div>
 
               <div className="input-group full-width">
-                <label>Message</label>
-                <textarea name="message" rows="3" placeholder="Parlez-nous de votre projet..." onChange={handleChange} />
+                <label>Message <Req /></label>
+                <textarea name="message" rows="3" placeholder="Parlez-nous de votre projet..." required onChange={handleChange} />
               </div>
 
               <div className="full-width">

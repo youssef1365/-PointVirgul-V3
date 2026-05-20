@@ -148,7 +148,16 @@ const Contact = () => {
 
   const set = (field) => (val) => setFormData(prev => ({ ...prev, [field]: val }));
   const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch('/contact-handler.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    const result = await res.json();
+    if (result.success) setSubmitted(true);
+  };
 
   return (
     <section id="contact" className="compact-full-screen" ref={sectionRef}>
@@ -502,7 +511,7 @@ const Contact = () => {
               />
 
               <div className="input-group full-width">
-                <label>Comment nous avez-vous trouvés ?</label>
+                <label>Comment avez-vous découvert Point Virgul ?</label>
                 <select name="source" onChange={handleChange} defaultValue="">
                   <option value="" disabled>Sélectionner...</option>
                   <option value="social">Réseaux sociaux (Instagram / LinkedIn)</option>

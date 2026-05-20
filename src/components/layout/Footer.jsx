@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Footer = () => {
+  const [dlLang, setDlLang] = useState('fr');
+
   const menuLinks = [
     { name: "À Propos", slug: "virgul" },
     { name: "Services", slug: "services" },
     { name: "Portfolio", slug: "portfolio" },
-    { name: "Contact", slug: "contact" }
+    { name: "Contact", slug: "contact" },
   ];
 
   const legalLinks = [
     { name: "Confidentialité", slug: "privacy-policy" },
-    { name: "Mentions légales", slug: "terms-conditions" }
+    { name: "Mentions légales", slug: "terms-conditions" },
   ];
+
+  const brochure = {
+    fr: { label: 'Manifeste Point Virgul', file: '/Brochure-fr.pdf' },
+    en: { label: 'Point Virgul Manifesto', file: '/brochure.pdf' },
+  };
 
   return (
     <footer className="pv-footer">
@@ -48,7 +55,7 @@ const Footer = () => {
           line-height: 1;
         }
 
-        /* Column separators — min-width:0 prevents grid blowout */
+        /* Column separators */
         .pv-main > div:not(:first-child) {
           border-left: 1px solid rgba(255, 255, 255, 0.07);
           padding-left: 36px;
@@ -60,7 +67,7 @@ const Footer = () => {
         .pv-tagline {
           font-size: 0.68rem;
           font-weight: 300;
-          color: rgba(255,255,255,0.8);
+          color: rgba(255, 255, 255, 0.8);
           letter-spacing: 0.15em;
           text-transform: uppercase;
           margin: 14px 0 28px;
@@ -70,7 +77,7 @@ const Footer = () => {
         .pv-address {
           font-size: 0.78rem;
           font-weight: 300;
-          color: rgba(255,255,255,0.8);
+          color: rgba(255, 255, 255, 0.8);
           line-height: 1.65;
           display: block;
           text-decoration: none;
@@ -79,20 +86,47 @@ const Footer = () => {
         .pv-address:hover { color: #ff6e1e; }
 
         .pv-nav-list { list-style: none; padding: 0; margin: 0; }
-        .pv-nav-list li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .pv-nav-list li { border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
         .pv-nav-list a {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 8px 0;
-          color: rgba(255,255,255,0.6);
+          color: rgba(255, 255, 255, 0.6);
           text-decoration: none;
           font-size: 0.85rem;
           transition: all 0.3s;
         }
         .pv-nav-list a:hover { color: #fff; padding-left: 5px; }
 
-        /* Manifeste button: fit its text, never overflow column */
+        /* Language toggle */
+        .pv-lang-toggle {
+          display: inline-flex;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          border-radius: 5px;
+          overflow: hidden;
+          margin-bottom: 10px;
+        }
+        .pv-lang-btn {
+          background: transparent;
+          border: none;
+          color: rgba(255, 255, 255, 0.45);
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          padding: 6px 14px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .pv-lang-btn.active {
+          background: #ff6e1e;
+          color: #fff;
+        }
+        .pv-lang-btn:not(.active):hover { color: #fff; }
+
+        /* Download button */
         .pv-download-btn {
           display: inline-flex;
           align-items: center;
@@ -131,62 +165,89 @@ const Footer = () => {
         .pv-social-grid { display: flex; gap: 10px; margin-top: 4px; }
 
         .pv-social-link {
-          width: 34px; height: 34px;
-          border: 1px solid rgba(255,255,255,0.1);
-          display: flex; align-items: center; justify-content: center;
-          color: #fff; text-decoration: none;
-          transition: all 0.3s; border-radius: 4px;
+          width: 34px;
+          height: 34px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          text-decoration: none;
+          transition: all 0.3s;
+          border-radius: 4px;
         }
-        .pv-social-link:hover { border-color: #ff6e1e; color: #ff6e1e; transform: translateY(-3px); }
+        .pv-social-link:hover {
+          border-color: #ff6e1e;
+          color: #ff6e1e;
+          transform: translateY(-3px);
+        }
 
         .pv-bottom {
-          border-top: 1px solid rgba(255,255,255,0.07);
+          border-top: 1px solid rgba(255, 255, 255, 0.07);
           padding: 14px 48px;
-          background: rgba(0,0,0,0.12);
+          background: rgba(0, 0, 0, 0.12);
         }
         .pv-bottom-inner {
-          max-width: 1280px; margin: 0 auto;
-          display: flex; justify-content: space-between; align-items: center;
+          max-width: 1280px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
         }
         .pv-copy {
-          font-size: 0.58rem; color: rgba(255,255,255,0.3);
-          letter-spacing: 0.12em; text-align: center; flex: 1;
+          font-size: 0.58rem;
+          color: rgba(255, 255, 255, 0.3);
+          letter-spacing: 0.12em;
+          text-align: center;
+          flex: 1;
         }
         .pv-legal { display: flex; }
         .pv-legal a {
-          font-size: 0.58rem; color: rgba(255,255,255,0.3);
-          text-decoration: none; margin-left: 16px; transition: color 0.3s;
+          font-size: 0.58rem;
+          color: rgba(255, 255, 255, 0.3);
+          text-decoration: none;
+          margin-left: 16px;
+          transition: color 0.3s;
         }
-        .pv-legal a:hover { color: rgba(255,255,255,0.7); }
+        .pv-legal a:hover { color: rgba(255, 255, 255, 0.7); }
 
         /* ── Tablet ── */
         @media (max-width: 1024px) {
           .pv-main { grid-template-columns: 1fr 1fr; gap: 0; }
           .pv-main > div:nth-child(odd) {
-            border-left: none; padding-left: 0; padding-right: 28px;
+            border-left: none;
+            padding-left: 0;
+            padding-right: 28px;
           }
           .pv-main > div:nth-child(even) { padding-left: 28px; }
           .pv-main > div:nth-child(3),
           .pv-main > div:nth-child(4) {
-            border-top: 1px solid rgba(255,255,255,0.07);
-            padding-top: 28px; margin-top: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding-top: 28px;
+            margin-top: 28px;
           }
           .pv-main > div:nth-child(3) { border-left: none; padding-left: 0; }
         }
 
         /* ── Mobile ── */
         @media (max-width: 640px) {
-          .pv-main { grid-template-columns: 1fr; padding: 40px 24px 36px; gap: 0; }
+          .pv-main {
+            grid-template-columns: 1fr;
+            padding: 40px 24px 36px;
+            gap: 0;
+          }
           .pv-main > div:not(:first-child) {
-            border-left: none; padding-left: 0; min-width: unset;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            padding-top: 24px; margin-top: 24px;
+            border-left: none;
+            padding-left: 0;
+            min-width: unset;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding-top: 24px;
+            margin-top: 24px;
           }
           .pv-main > div:nth-child(odd),
           .pv-main > div:nth-child(even) { padding-right: 0; }
           .pv-main > div:nth-child(3),
           .pv-main > div:nth-child(4) { margin-top: 0; }
-          /* Full-width on mobile */
           .pv-download-btn { width: 100%; justify-content: center; }
           .pv-bottom { padding: 14px 24px; }
           .pv-bottom-inner { flex-direction: column; gap: 8px; text-align: center; }
@@ -204,7 +265,8 @@ const Footer = () => {
           <p className="pv-label">Localisation</p>
           <a
             href="https://share.google/UW1iK6VgAEbfFrKpp"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="pv-address"
           >
             Angle Rue Reine Elisabeth &amp; Moulay Abdellah<br />
@@ -212,12 +274,14 @@ const Footer = () => {
           </a>
         </div>
 
-        {/* Column 2: MENU */}
+        {/* Column 2: INDEX */}
         <div>
           <p className="pv-label">Index</p>
           <ul className="pv-nav-list">
             {menuLinks.map((link) => (
-              <li key={link.slug}><a href={`#${link.slug}`}>{link.name}</a></li>
+              <li key={link.slug}>
+                <a href={`#${link.slug}`}>{link.name}</a>
+              </li>
             ))}
           </ul>
         </div>
@@ -225,8 +289,27 @@ const Footer = () => {
         {/* Column 3: EXPLORATION */}
         <div>
           <p className="pv-label">Exploration</p>
-          <a href="/brochure.pdf" download className="pv-download-btn">
-            <span>Manifeste Point Virgul</span>
+
+          <div className="pv-lang-toggle">
+            {['fr', 'en'].map((lang) => (
+              <button
+                key={lang}
+                className={`pv-lang-btn${dlLang === lang ? ' active' : ''}`}
+                onClick={() => setDlLang(lang)}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          <br />
+
+          <a
+            href={brochure[dlLang].file}
+            download
+            className="pv-download-btn"
+          >
+            <span>{brochure[dlLang].label}</span>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
             </svg>
@@ -235,14 +318,26 @@ const Footer = () => {
           <div style={{ marginTop: 28 }}>
             <p className="pv-label">Suivez-nous</p>
             <div className="pv-social-grid">
-              <a href="https://ma.linkedin.com/company/pointvirgul" target="_blank" rel="noopener noreferrer" className="pv-social-link" aria-label="LinkedIn">
+              <a
+                href="https://ma.linkedin.com/company/pointvirgul"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pv-social-link"
+                aria-label="LinkedIn"
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                   <rect x="2" y="9" width="4" height="12" />
                   <circle cx="4" cy="4" r="2" />
                 </svg>
               </a>
-              <a href="https://www.instagram.com/agence.virgul/" target="_blank" rel="noopener noreferrer" className="pv-social-link" aria-label="Instagram">
+              <a
+                href="https://www.instagram.com/agence.virgul/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pv-social-link"
+                aria-label="Instagram"
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -256,8 +351,12 @@ const Footer = () => {
         {/* Column 4: CONTACT */}
         <div className="pv-contact-col">
           <p className="pv-label">Contact</p>
-          <a href="mailto:hello@pointvirgul.com" className="pv-contact-link">hello@pointvirgul.com</a>
-          <a href="tel:+212661613471" className="pv-contact-link">+212 6 61 61 34 71</a>
+          <a href="mailto:hello@pointvirgul.com" className="pv-contact-link">
+            hello@pointvirgul.com
+          </a>
+          <a href="tel:+212661613471" className="pv-contact-link">
+            +212 6 61 61 34 71
+          </a>
         </div>
 
       </div>
@@ -267,7 +366,9 @@ const Footer = () => {
           <p className="pv-copy">© 2026 POINT VIRGUL</p>
           <div className="pv-legal">
             {legalLinks.map((link) => (
-              <a key={link.slug} href={`#${link.slug}`}>{link.name}</a>
+              <a key={link.slug} href={`#${link.slug}`}>
+                {link.name}
+              </a>
             ))}
           </div>
         </div>
